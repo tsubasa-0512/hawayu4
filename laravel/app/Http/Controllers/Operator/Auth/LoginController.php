@@ -24,13 +24,11 @@ class LoginController extends Controller
       $email = $request->input('email');
       $operator = Operator::where('email', $email)->first();
       
-      $operator->api_token = hash('sha256', $token);
+      $operator->api_token = $token;
       $operator->save();
-  
-      $operator->update(['api_token' => str_random(60)]);
-  
+
+      session()->put('role', 'operator');        
       session()->put('api_token', $token);
-      session()->put('role', 'operator');
     }
 
     public function __construct()
@@ -49,8 +47,11 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request)
-    {
+    {        
         Auth::guard('operator')->logout();
+
+        session()->put('role', '');        
+        session()->put('api_token', '');
 
         return $this->loggedOut($request);
     }

@@ -13,6 +13,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('users')) {
+            return;
+        }
+
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -23,6 +27,10 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
             $table->text('icon')->nullable();
+            $table->unsignedBigInteger('membership_id')->nullable();
+            $table->foreign('membership_id')->references('id')->on('memberships');
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->rememberToken();
             $table->timestamps();
         });

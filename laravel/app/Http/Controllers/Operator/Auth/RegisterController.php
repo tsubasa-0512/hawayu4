@@ -50,21 +50,15 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        $token = str_random(80);
+        
+        session()->put('api_token', $token);
+        
         return Operator::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
-            'api_token' => Str::random(80),
+            'api_token' => $token,
         ]);
-    }
-
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        return $this->registered($request, $user)
-        ?: redirect($this->redirectPath());
     }
 }

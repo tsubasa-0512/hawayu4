@@ -20,39 +20,24 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function () {
         'reset'    => false,
         'verify'   => false
     ]);
-
-    // ログイン認証後
-    Route::middleware('auth:user')->group(function () {
-
-        // TOPページ
-        Route::resource('home', 'HomeController', ['only' => 'index']);
-
-    });
 });
+// ユーザーログアウト
+Route::post('/user/logout', 'User\Auth\LoginController@logout');
 
-// 管理者
+// 保健師
 Route::namespace('Operator')->prefix('operator')->name('operator.')->group(function () {
-
+    
     // ログイン認証関連
     Auth::routes([
         'register' => true,
         'reset'    => false,
         'verify'   => false
     ]);
-
-    // ログイン認証後
-    Route::middleware('auth:operator')->group(function () {
-
-        // TOPページ
-        Route::resource('home', 'HomeController', ['only' => 'index']);
-
-    });
-
 });
+
+// 保健師ログアウト
+Route::post('/operator/logout', 'Operator\Auth\LoginController@logout');
 
 Route::get('{any}', function () {
     return view('app');
 })->where('any','.*');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -5,16 +5,17 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Example from './pages/Example';
 import Home from './pages/Home';
+import UserMyPage from './pages/user/UserMyPage';
+import OpeMyPage from './pages/operators/OpeMyPage';
 
   function App() {
     return (
         <div>
             <Switch>
-                <Route path='/example' exact component={Example} />
-
                 <Route path='/' exact component={Home} />
+                <Route path='/user/home' exact component={UserMyPage} />
+                <Route path='/operator/home' exact component={OpeMyPage} />
             </Switch>
         </div>
     );

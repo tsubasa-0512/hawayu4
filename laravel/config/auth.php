@@ -49,12 +49,12 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-            'hash' => true,
+            'hash' => false,
         ],
         'operator_api' => [
             'driver' => 'token',
             'provider' => 'operators',
-            'hash' => true,
+            'hash' => false,
         ],
     ],
 

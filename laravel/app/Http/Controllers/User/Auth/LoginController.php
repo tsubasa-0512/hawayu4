@@ -15,18 +15,13 @@ class LoginController extends Controller
 
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    protected function authenticated(Request $request)
+    protected function authenticated(Request $request, $user)
     {
       $token = Str::random(80);
-  
-      $request->user()->forceFill([
-          'api_token' => hash('sha256', $token),
-      ])->save();
-  
-      $request->user()->update(['api_token' => str_random(60)]);
-  
-      session()->put('api_token', $token);
+      $user->update(['api_token' => $token]);
+      
       session()->put('role', 'user');
+      session()->put('api_token', $token);
     }
 
     public function __construct()
@@ -48,8 +43,11 @@ class LoginController extends Controller
 
     // ログアウト処理
     public function logout(Request $request)
-    {
+    {        
         Auth::guard('user')->logout();
+        
+        session()->put('role', '');        
+        session()->put('api_token', '');
 
         return $this->loggedOut($request);
     }
