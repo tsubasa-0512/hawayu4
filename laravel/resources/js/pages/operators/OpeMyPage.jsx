@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import OpeFooter from './OpeFooter';
-
 function OpeMyPage() {
     const [operator, setOperator] = useState([]);
 
@@ -59,7 +57,6 @@ function OpeMyPage() {
                 <dd>{operator.created_at}</dd>
              </S2Box>
       </SDiv>
-      <OpeFooter />
       </>
     )
 }

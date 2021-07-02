@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
-function OpeFooter() {
+function Footer() {
     return (
         <SFooter>
           &copy; 2021 Inc.TechGiraffe
@@ -10,7 +10,7 @@ function OpeFooter() {
 }
 
 const SFooter = styled.footer`
-    background-color:#11999e;
+    background-color:#fabb7d;
     color:#fff;
     text-align:center;
     padding:8px 0;
@@ -18,4 +18,4 @@ const SFooter = styled.footer`
     bottom:0;
     width:100%;
 `
-export default OpeFooter
+export default Footer;
