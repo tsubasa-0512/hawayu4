@@ -9,8 +9,17 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run(): void
+    public function run()
     {
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         // $this->call(TruncateAllTables::class);
+        $this->call(CompanySeeder::class);
+        $this->call(MembershipSeeder::class);
+        $this->call(StatueSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(OperatorSeeder::class);
+
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
