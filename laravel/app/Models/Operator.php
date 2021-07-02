@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class Operator extends Authenticatable
@@ -37,4 +38,9 @@ class Operator extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function rooms(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Models\Room', 'rooms','operator_id', 'user_id')->withTimestamps();
+    }
 }

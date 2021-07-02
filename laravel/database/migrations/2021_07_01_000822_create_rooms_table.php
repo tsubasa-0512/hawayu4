@@ -13,17 +13,21 @@ class CreateRoomsTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('operator_id')->nullable();
             $table->foreign('operator_id')->references('id')->on('operators');
-            $table->unsignedBigInteger('company_id')->nullable();
-            $table->foreign('status_id')->references('id')->on('status');
-            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->unsignedBigInteger('status_id');
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -33,6 +37,8 @@ class CreateRoomsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('rooms');
+        Schema::enableForeignKeyConstraints();
     }
 }

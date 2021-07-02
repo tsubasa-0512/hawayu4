@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             return;
         }
 
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -27,13 +29,15 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
             $table->text('icon')->nullable();
-            $table->unsignedBigInteger('membership_id')->nullable();
+            $table->unsignedBigInteger('membership_id');
             $table->foreign('membership_id')->references('id')->on('memberships');
-            $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -43,6 +47,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
+        Schema::enableForeignKeyConstraints();
     }
 }
