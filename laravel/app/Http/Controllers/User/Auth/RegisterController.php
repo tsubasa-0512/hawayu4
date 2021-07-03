@@ -12,6 +12,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Models\Company;
 
 class RegisterController extends Controller
 {
@@ -48,6 +49,7 @@ class RegisterController extends Controller
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'code' => ['required'],
         ]);
     }
 
@@ -57,12 +59,20 @@ class RegisterController extends Controller
         $token = str_random(80);
         
         session()->put('api_token', $token);
+        session()->put('role', 'user');
 
-        return User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
-            'api_token' => $token,
-        ]);
+        $code = $data['code'];
+        $company = Company::where('code', $code)->first();
+
+        if($company) {
+            return User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => Hash::make($data['password']),
+                'company_id' => $company['id'],
+                'membership_id' => 2,
+                'api_token' => $token,
+            ]);
+        }
     }
 }

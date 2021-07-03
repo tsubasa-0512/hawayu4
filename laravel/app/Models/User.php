@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','api_token',
+        'name', 'email', 'password','api_token','membership_id','company_id',
     ];
 
     /**
@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function rooms(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Room', 'rooms','user_id', 'operator_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Operator', 'rooms','user_id', 'operator_id')->withTimestamps();
     }
 }
