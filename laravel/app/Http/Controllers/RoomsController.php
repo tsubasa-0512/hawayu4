@@ -48,4 +48,28 @@ class RoomsController extends Controller
         ->where('operator_id', $operator->id)
         ->get();
     }
+    
+    //保健師が対応を完了
+    public function closed(Request $request, Room $room) {
+        $operator = $request->user();
+        $room = Room::find($request->room_id);
+        $room->status_id = 3;
+        $room->update();
+
+        $room->completions()->attach($operator->id);
+
+        return $room;
+    }
+    
+    // 保健師が対応完了を戻す
+    public function rollback(Request $request, Room $room) {        
+        $operator = $request->user();
+        $room = Room::find($request->room_id);
+        $room->status_id = 2;
+        $room->update();
+    
+        $room->completions()->detach($operator->id);
+    
+        return $room;        
+    }
 }

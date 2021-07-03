@@ -41,6 +41,11 @@ class Operator extends Authenticatable
 
     public function rooms(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Room', 'rooms','operator_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\User', 'rooms','operator_id', 'user_id')->withTimestamps();
+    }
+
+    public function completions(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Models\Room', 'completions')->withTimestamps();
     }
 }
