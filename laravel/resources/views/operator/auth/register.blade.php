@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                     <label for="password">パスワード（確認）</label>
-                    <input id="password" type="password-confirm" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="password">
+                    <input id="password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="password">
                 </div>
 
                 <div class="form-group">

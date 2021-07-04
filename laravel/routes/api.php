@@ -41,6 +41,8 @@ Route::middleware('auth:operator_api')->get('/operator', function (Request $requ
 // ユーザーのroom作成
 Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/create-room','RoomsController@create');
+    // 未対応ルーム情報取得
+    Route::get('/backlog', 'RoomsController@backlog');
 });
 
 Route::group(['middleware' => ['auth:operator_api']], function () {
