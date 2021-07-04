@@ -71763,7 +71763,11 @@ function Logout() {
     action: "/operator/logout",
     method: "POST",
     style: formstyle
-  })));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "hidden",
+    name: "_token",
+    value: csrf_token
+  }))));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Logout);
@@ -72096,11 +72100,10 @@ function App() {
     path: "/user/home",
     exact: true,
     component: _pages_user_UserMyPage__WEBPACK_IMPORTED_MODULE_4__["default"]
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pages_layouts_DefaultLayout__WEBPACK_IMPORTED_MODULE_6__["DefaultLayout"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: "/operator/home",
-    exact: true,
     component: _pages_operators_OpeMyPage__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }))));
+  })));
 }
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null)), document.getElementById('example'));

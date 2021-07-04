@@ -33,7 +33,7 @@ function Login() {
             <form id="login-form" action="/user/login" method="GET" style={formstyle}>
             <input type="hidden" name="_token" value={ csrf_token } />
             </form>
-
+        
             <button id="login" onClick={loginOpe}>保健師ログイン</button>
             <form id="login-form-ope" action="/operator/login" method="GET" style={formstyle}>
             <input type="hidden" name="_token" value={ csrf_token } />

@@ -20,9 +20,9 @@ import { DefaultLayout } from './pages/layouts/DefaultLayout';
                   <Route path='/user/home' exact component={UserMyPage} />
                 </DefaultLayout>
 
-                <DefaultLayout>
-                  <Route path='/operator/home' exact component={OpeMyPage} />
-                </DefaultLayout>
+               
+                  <Route path='/operator/home' component={OpeMyPage} />
+          
             </Switch>
         </div>
     );

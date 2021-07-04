@@ -34,7 +34,7 @@ function Logout() {
       <div>
             <button id="logout" onClick={logoutOpe}>保健師ログアウト</button>
             <form id="logout-form-ope" action="/operator/logout" method="POST" style={formstyle}>
-            {/* <input type="hidden" name="_token" value={ csrf_token } /> */}
+            <input type="hidden" name="_token" value={ csrf_token } />
             </form>
       </div>
     }
