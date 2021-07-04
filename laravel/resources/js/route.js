@@ -10,6 +10,7 @@ import UserMyPage from './pages/user/UserMyPage';
 import OpeMyPage from './pages/operators/OpeMyPage';
 import { DefaultLayout } from './pages/layouts/DefaultLayout';
 
+
   function App() {
     return (
         <div>
@@ -18,7 +19,10 @@ import { DefaultLayout } from './pages/layouts/DefaultLayout';
                 <DefaultLayout>
                   <Route path='/user/home' exact component={UserMyPage} />
                 </DefaultLayout>
-                <Route path='/operator/home' exact component={OpeMyPage} />
+
+                <DefaultLayout>
+                  <Route path='/operator/home' exact component={OpeMyPage} />
+                </DefaultLayout>
             </Switch>
         </div>
     );
