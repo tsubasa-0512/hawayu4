@@ -10,6 +10,7 @@ import Home from '../pages/Home';
 import { DefaultLayout } from '../pages/layouts/DefaultLayout';
 import { userRoutes } from './userRoutes';
 import { opeRoutes } from './opeRoutes';
+import ChatPage from '../pages/chats/ChatPage';
 
 
   function App() {
@@ -22,6 +23,12 @@ import { opeRoutes } from './opeRoutes';
                  <Route exact path='/'>
                    <DefaultLayout>
                     <Home />
+                   </DefaultLayout>
+                 </Route>
+
+                 <Route path='/chatpage'>
+                   <DefaultLayout>
+                    <ChatPage />
                    </DefaultLayout>
                  </Route>
 

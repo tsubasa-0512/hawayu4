@@ -1,30 +1,36 @@
 import React from 'react'
 import styled from 'styled-components';
-import UserInfo from '../user/UserInfo';
+import { useHistory } from 'react-router-dom';
 
-const AddChatRoom = ({user_id}) => {
-    var formstyle = {
-        display: "none"
-      };
+function AddChatRoom () {
+    const history = useHistory();
+    const OpenChatRoom = async () => {
+        const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content")
 
-    const csrf_token = document
-    .querySelector('meta[name="csrf-token"]')
-    .getAttribute("content")
+        const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
 
-    const OpenChatRoom =()=>{
-        document.querySelector("#addChatRoom").submit();
-    }
-
+         await axios
+        .post(`/api/create-room`,{api_token},{csrf_token})
+     
+        .then( (res) => {
+            location.href = "/chatpage"
+                // console.log("チャットルームを作りました")
+                // e.preventDefault();
+                // history.push("/chatpage");
+                }).catch(error => {
+                     console.log('Error',error.response);
+                         });
+                }
 
     return (
         <SDiv>
             <SButton id="addchat" onClick={OpenChatRoom}>
                 <SP>相談する</SP>
             </SButton>
-            <form id="addChatRoom" action="/create-room" method="post" style={formstyle}>
-            {/* <input type="hidden" name="user_id" value={ user_id } /> */}
-            <input type="hidden" name="_token" value={ csrf_token } />
-            </form>
         </SDiv>
     )
 }

@@ -71801,48 +71801,97 @@ function Logout() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var _user_UserInfo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../user/UserInfo */ "./resources/js/pages/user/UserInfo.jsx");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var _templateObject, _templateObject2, _templateObject3;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-var AddChatRoom = function AddChatRoom(_ref) {
-  var user_id = _ref.user_id;
-  var formstyle = {
-    display: "none"
-  };
-  var csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
-  var OpenChatRoom = function OpenChatRoom() {
-    document.querySelector("#addChatRoom").submit();
-  };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SButton, {
+
+function AddChatRoom() {
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["useHistory"])();
+
+  var OpenChatRoom = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var api_token, csrf_token;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              api_token = document.querySelector('meta[name="api-token"]').getAttribute("content");
+              csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+              _context.next = 4;
+              return axios.post("/api/create-room", {
+                api_token: api_token
+              }, {
+                csrf_token: csrf_token
+              }).then(function (res) {
+                location.href = "/chatpage"; // console.log("チャットルームを作りました")
+                // e.preventDefault();
+                // history.push("/chatpage");
+              })["catch"](function (error) {
+                console.log('Error', error.response);
+              });
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function OpenChatRoom() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SButton, {
     id: "addchat",
     onClick: OpenChatRoom
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SP, null, "\u76F8\u8AC7\u3059\u308B")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    id: "addChatRoom",
-    action: "/create-room",
-    method: "post",
-    style: formstyle
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "hidden",
-    name: "_token",
-    value: csrf_token
-  })));
-};
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SP, null, "\u76F8\u8AC7\u3059\u308B")));
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (AddChatRoom);
-var SDiv = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    width:1000px;\n    margin:auto;\n    text-align:center;\n    display:flex;\n    justify-content: center;\n"])));
-var SButton = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    background-color:skyblue;\n    width:105px;\n    height:97px;\n    margin:10px auto;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
-var SP = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].p(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    line-height:97px;\n"])));
+var SDiv = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    width:1000px;\n    margin:auto;\n    text-align:center;\n    display:flex;\n    justify-content: center;\n"])));
+var SButton = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].button(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    background-color:skyblue;\n    width:105px;\n    height:97px;\n    margin:10px auto;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
+var SP = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].p(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    line-height:97px;\n"])));
+
+/***/ }),
+
+/***/ "./resources/js/pages/chats/ChatPage.jsx":
+/*!***********************************************!*\
+  !*** ./resources/js/pages/chats/ChatPage.jsx ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+function ChatPage() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "\u30C1\u30E3\u30C3\u30C8\u30EB\u30FC\u30E0");
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ChatPage);
 
 /***/ }),
 
@@ -72316,6 +72365,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_layouts_DefaultLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/layouts/DefaultLayout */ "./resources/js/pages/layouts/DefaultLayout.jsx");
 /* harmony import */ var _userRoutes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./userRoutes */ "./resources/js/routers/userRoutes.jsx");
 /* harmony import */ var _opeRoutes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./opeRoutes */ "./resources/js/routers/opeRoutes.jsx");
+/* harmony import */ var _pages_chats_ChatPage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/chats/ChatPage */ "./resources/js/pages/chats/ChatPage.jsx");
+
 
 
 
@@ -72329,6 +72380,8 @@ function App() {
     exact: true,
     path: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pages_layouts_DefaultLayout__WEBPACK_IMPORTED_MODULE_4__["DefaultLayout"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pages_Home__WEBPACK_IMPORTED_MODULE_3__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    path: "/chatpage"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pages_layouts_DefaultLayout__WEBPACK_IMPORTED_MODULE_4__["DefaultLayout"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pages_chats_ChatPage__WEBPACK_IMPORTED_MODULE_7__["default"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     path: "/user",
     render: function render(_ref) {
       var url = _ref.match.url;
