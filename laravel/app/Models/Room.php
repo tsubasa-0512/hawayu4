@@ -12,8 +12,13 @@ class Room extends Model
     {
         return $this->belongsTo('App\Models\Status');
     }
-
+    
     public function completions() {
         return $this->belongsToMany('App\Models\Operator', 'completions')->withTimestamps();
+    }
+
+    public function messages()
+    {
+        return $this->hasMany('App\Models\Message');
     }
 }

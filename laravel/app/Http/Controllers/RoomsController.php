@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Operator;
 use App\Models\Status;
 use App\Models\Room;
+use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,6 +23,23 @@ class RoomsController extends Controller
         $room->save();
 
         return $room;
+    }
+
+    // room情報取得
+    public function loadRoom(Request $request) {
+        // ユーザーの場合は自身の立てたroomを表示し、保健師の場合は未対応のroomを全て表示
+        if($request->role === 'user') {
+            $user_id = Auth::user()->id;
+            return Room::where('user_id', $user_id)->get();    
+        }else {
+            return Room::where('status_id', 1)->get();
+        }
+    }
+    // roomに紐づくmessage情報の入手
+    public function loadMessage(Request $request) {
+        $room_id = $request->room_id;
+        $msg_list = Message::where('room_id', $room_id)->get();
+        return json_encode($msg_list);
     }
 
     //未対応ルーム情報取得

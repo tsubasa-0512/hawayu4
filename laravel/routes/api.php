@@ -13,19 +13,6 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// ログイン関連
-// ログイン画面表示
-Route::group(['middleware' => ['api']], function () {
-    // ユーザー登録画面表示
-    Route::get('/user-register', 'HomeController@userRegister');    
-    // 保健師登録画面表示
-    Route::get('/operator-register', 'HomeController@operatorRegister');    
-    // ユーザーログイン画面表示
-    Route::get('/user-login', 'HomeController@userLogin');    
-    // 保健師ログイン画面表示
-    Route::get('/operator-login', 'HomeController@operatorLogin');    
-});
-
 // ログインユーザの情報取得
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -41,8 +28,6 @@ Route::middleware('auth:operator_api')->get('/operator', function (Request $requ
 // ユーザーのroom作成
 Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/create-room','RoomsController@create');
-    // 未対応ルーム情報取得
-    Route::get('/backlog', 'RoomsController@backlog');
 });
 
 Route::group(['middleware' => ['auth:operator_api']], function () {

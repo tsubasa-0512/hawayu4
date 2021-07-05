@@ -12,6 +12,9 @@
 */
 
 // ユーザー
+
+use App\Events\SendMessage;
+
 Route::namespace('User')->prefix('user')->name('user.')->group(function () {
 
     // ログイン認証関連
@@ -37,6 +40,15 @@ Route::namespace('Operator')->prefix('operator')->name('operator.')->group(funct
 
 // 保健師ログアウト
 Route::post('/operator/logout', 'Operator\Auth\LoginController@logout');
+
+// room情報取得
+Route::post('/rooms','RoomsController@loadRoom'); 
+
+// roomに紐づくメッセージ情報取得
+Route::post('/load-msg','RoomsController@loadMessage');
+
+// メッセージ送信
+Route::post('/messages','MessagesController@sendMessages'); 
 
 Route::get('{any}', function () {
     return view('app');

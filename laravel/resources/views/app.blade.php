@@ -8,8 +8,10 @@
     <meta name="role" content="{{ session()->get('role') ?? '' }}">
     <meta name="api-token" content="{{ session()->get('api_token') ?? '' }}">
     <title>{{ config('app.name', 'Hawayu') }}</title>
-    <!-- Scripts -->
+
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
