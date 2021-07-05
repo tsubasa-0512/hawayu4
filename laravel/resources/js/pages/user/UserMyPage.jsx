@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import UserInfo from './UserInfo';
-import AddChatRoom from '../chats/AddChatRoom';
 
 function UserMyPage() {
     const [user, setUser] = useState([]);
@@ -16,7 +14,6 @@ function UserMyPage() {
     useEffect(() => {
         getUser()
     },[])
-
     const getUser = async () => {
         console.log("URL",`/api/user?api_token=${api_token}`)
          await axios
@@ -28,20 +25,32 @@ function UserMyPage() {
                      console.log('Error',error.response);
                          });
                 }
-
     return (
         <>
         <SH1>User My Page</SH1>
-        <UserInfo 
-        user_id = {user.id}
-        user_name={user.name}
-        email={user.email}
-        company_id={user.company_id}
-        created_at={user.created_at}
-        />
-        <AddChatRoom 
-        user_id = {user.id}
-        />
+        <SDiv>
+            <SBox>
+             <dt>名前</dt>
+             <dd>{user.name}</dd>
+             {/* <dt>ユーザーネーム</dt>
+             <dd>{user.nickname}</dd> */}
+             <SImage
+                src="https://source.unsplash.com/random"
+                width= "150px"
+                height ="150px"
+              />
+            </SBox>
+             <S2Box>
+                {/* <dt>性別</dt>
+                <dd>{user.gender}</dd>
+                <dt>誕生日</dt>
+                <dd>{user.birthday}</dd> */}
+                <dt>email</dt>
+                <dd>{user.email}</dd>
+                <dt>登録日</dt>
+                <dd>{user.created_at}</dd>
+             </S2Box>
+      </SDiv>
       </>
     )
 }

@@ -1,14 +1,14 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Footer from "./Footer";
 import Header from "./Header";
 
-export const DefaultLayout = memo((props) =>{
+export const DefaultLayout = (props) =>{
     const{children}=props;
     return(
         <>
         <Header />
-         {children}
+        {children}
         <Footer />
         </>
     )
-});
+}
