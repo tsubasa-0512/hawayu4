@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
-import {ReactDOM,Link} from 'react-dom';
-import axios from 'axios';
-import { Switch , useHistory} from 'react-router-dom';
+import styled from "styled-components"
+
 import Login from './Login';
+import logo_transparent from '../images/logo_transparent.png';
 function Home() {
-
-//   const userLogin = () =>  {
-//     axios
-//    .get(`/api/user-login`)
-//  }
-
-
-//   const opeLogin = () =>  {
-//    axios
-//    .get(`/api/operator-login`)
-//  }
-
             
   return(
     <>
-    ホームページ
-    <Login />
-           
-    </>
+    <SDiv>
+      <SImg src={logo_transparent} />
+      <Login />
+    </SDiv>
+    </>   
+  
   )
 }
 
 export default Home;
+
+const SImg = styled.img`
+  width:300px;
+`
+
+const SDiv = styled.div `
+  text-align:center;
+`

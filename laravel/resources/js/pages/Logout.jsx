@@ -1,4 +1,5 @@
 import React from 'react';
+import { PrimaryButton } from '../parts/PrimaryButton';
 
 function Logout() {
   const csrf_token = document
@@ -25,14 +26,14 @@ function Logout() {
       <>
       {role==="user" &&
       <div>
-            <button id="logout" onClick={logoutUser}>ユーザーログアウト</button>
+            <PrimaryButton onClick={logoutUser}>ユーザーログアウト</PrimaryButton>
             <form id="logout-form" action="/user/logout" method="POST" style={formstyle}>
             <input type="hidden" name="_token" value={ csrf_token } />
             </form>
       </div>
       }{role==="operator" && 
       <div>
-            <button id="logout" onClick={logoutOpe}>保健師ログアウト</button>
+            <PrimaryButton onClick={logoutOpe}>保健師ログアウト</PrimaryButton>
             <form id="logout-form-ope" action="/operator/logout" method="POST" style={formstyle}>
             <input type="hidden" name="_token" value={ csrf_token } />
             </form>

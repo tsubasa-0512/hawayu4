@@ -20,7 +20,9 @@ import { opeRoutes } from './opeRoutes';
       
                  {/* <Route path='/' exact component={Home} /> */}
                  <Route exact path='/'>
-                   <Home />
+                   <DefaultLayout>
+                    <Home />
+                   </DefaultLayout>
                  </Route>
 
                 <Route 
