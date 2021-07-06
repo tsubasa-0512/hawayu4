@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="role" content="{{ session()->get('role') ?? '' }}">
     <meta name="api-token" content="{{ session()->get('api_token') ?? '' }}">
+
     <title>{{ config('app.name', 'Hawayu') }}</title>
 
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
