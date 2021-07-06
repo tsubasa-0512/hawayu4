@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoomsTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +15,14 @@ class CreateRoomsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->text('message');
+            // $table->string('sender');
             $table->unsignedBigInteger('operator_id')->nullable();
             $table->foreign('operator_id')->references('id')->on('operators');
-            $table->unsignedBigInteger('company_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('room_id')->nullable();
+            $table->foreign('room_id')->references('id')->on('rooms');
             $table->timestamps();
         });
 
@@ -38,7 +37,7 @@ class CreateRoomsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('messages');
         Schema::enableForeignKeyConstraints();
     }
 }

@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Home from './pages/Home';
+import Chat from './pages/Chat';
 import UserMyPage from './pages/user/UserMyPage';
 import OpeMyPage from './pages/operators/OpeMyPage';
 import { DefaultLayout } from './pages/layouts/DefaultLayout';
@@ -15,6 +16,7 @@ import { DefaultLayout } from './pages/layouts/DefaultLayout';
         <div>
             <Switch>
                 <Route path='/' exact component={Home} />
+                <Route path='/chats' exact component={Chat} />
                 <DefaultLayout>
                   <Route path='/user/home' exact component={UserMyPage} />
                 </DefaultLayout>

@@ -53,6 +53,7 @@ class RegisterController extends Controller
         $token = str_random(80);
         
         session()->put('api_token', $token);
+        session()->put('role', 'operator');
         
         return Operator::create([
             'name'     => $data['name'],

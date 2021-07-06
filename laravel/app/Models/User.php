@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class User extends Authenticatable
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','api_token',
+        'name', 'email', 'password','api_token','membership_id','company_id',
     ];
 
     /**
@@ -47,5 +48,10 @@ class User extends Authenticatable
     public function company(): BelongsTo
     {
         return $this->belongsTo('App\Models\Company');
+    }
+
+    public function rooms(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Models\Operator', 'rooms','user_id', 'operator_id')->withTimestamps();
     }
 }
