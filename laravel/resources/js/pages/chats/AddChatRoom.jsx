@@ -22,10 +22,10 @@ function AddChatRoom () {
         // .then( (roomres) => {
             // setRoom(roomres.data);
         // })
-        .then(()=>{
-            // const roomId = roomId
-            // location.href = "/chatpage?roomid="+roomId;
-            location.href="/chatpage"
+        .then((res)=>{
+            const roomId = res.data.id
+            location.href = "/chatpage?roomid="+res.data.id;
+            // location.href="/chatpage"
             // console.log("roomid",res.data)
                 // console.log("チャットルームを作りました")
                 // e.preventDefault();

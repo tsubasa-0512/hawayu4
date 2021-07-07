@@ -10,7 +10,6 @@ function Chat({user_name,operator_id,operator_name}) {
 
     useEffect(() => {
         loadRooms();
-        subscribeToPusher();
     },[])
 
     //表示時に部屋情報ロード（useEffect）
@@ -81,12 +80,13 @@ function Chat({user_name,operator_id,operator_name}) {
     // チャット送信（onClick）
     const onClickSendChats= (e)=>{
         // const msg = document.getElementById('chat_tbox').value;
+        const role = document.querySelector('meta[name="role"]').getAttribute("content");
         const tok = document.querySelector('meta[name="csrf-token"]').content;
         // let data = new FormData();
         // data.append('message','msg');
 
-        //ユーザー画面からだとoperator_idがなくてエラーになる
-        fetch('/messages?message='+inputChat+'&operator_id='+operator_id+'&room_id='+room_id,{
+        //ユーザー画面からだとoperator_idがなくてエラーになる→ログイン中のユーザー・オペレーターのidを渡してください
+        fetch('/messages?message='+inputChat+'&id='+1+'&role='+role+'&room_id='+room_id,{
             method:'POST',
             headers:{
               'Content-Type':'application/json',
@@ -107,31 +107,7 @@ function Chat({user_name,operator_id,operator_name}) {
         .catch((error) => {
             console.error(error);
         });
-
-        // subscribeToPusher();       
     }
-    
-    //表示時にpusher・チャンネル接続(useEffect)
-    const subscribeToPusher=()=>{
-        let a_tok = document.querySelector('meta[name="csrf-token"]').content;
-        Pusher.logToConsole = true;
-        var pusher = new Pusher('f23935e89d5fa6bab2e8', {
-          cluster: 'ap3',
-          auth:{
-            headers:{
-              'X-CSRF-TOKEN':a_tok
-            }
-          }
-        });
-        // var new_msg = [];
-        //SendMessage = 送信時にapi接続→接続先のapiでデータ保存＋pusherにmessage送信
-        var channel = pusher.subscribe('send-message');
-        channel.bind('App\\Events\\SendMessage', function(d) {
-        //   console.log("you have a new message:"+JSON.stringify(d));
-          // new_msg.push(d.message.message);
-        });      
-    }
-
         return (
             <div className="container">                
                 <div className="row no-gutters">

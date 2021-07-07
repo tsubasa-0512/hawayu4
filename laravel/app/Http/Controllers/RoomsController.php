@@ -38,7 +38,9 @@ class RoomsController extends Controller
     // roomに紐づくmessage情報の入手
     public function loadMessage(Request $request) {
         $room_id = $request->room_id;
+        
         $msg_list = Message::where('room_id', $room_id)->get();
+
         return json_encode($msg_list);
     }
 
