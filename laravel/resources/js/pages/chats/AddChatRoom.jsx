@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+
+
 
 function AddChatRoom () {
-    const history = useHistory();
+    //ルーム情報
+   const [room, setRoom] = useState();
+
     const OpenChatRoom = async () => {
         const api_token = document
         .querySelector('meta[name="api-token"]')
@@ -16,8 +19,14 @@ function AddChatRoom () {
          await axios
         .post(`/api/create-room`,{api_token},{csrf_token})
      
-        .then( (res) => {
-            location.href = "/chatpage"
+        // .then( (roomres) => {
+            // setRoom(roomres.data);
+        // })
+        .then(()=>{
+            // const roomId = roomId
+            // location.href = "/chatpage?roomid="+roomId;
+            location.href="/chatpage"
+            // console.log("roomid",res.data)
                 // console.log("チャットルームを作りました")
                 // e.preventDefault();
                 // history.push("/chatpage");
@@ -29,7 +38,7 @@ function AddChatRoom () {
     return (
         <SDiv>
             <SButton id="addchat" onClick={OpenChatRoom}>
-                <SP>相談する</SP>
+                <SP>新規相談</SP>
             </SButton>
         </SDiv>
     )
