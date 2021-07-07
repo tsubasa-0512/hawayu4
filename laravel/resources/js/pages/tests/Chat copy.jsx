@@ -22,6 +22,7 @@ class Chat extends React.Component {
         Echo.channel('send-message').listen('SendMessage',(e)=> {
           let tok = document.querySelector('meta[name="csrf-token"]').content;
           // 選択したroom_idを常に保持しており、その値を以下のurlに入れたい
+          //マウント時にpusherからの通知が送られるとメッセージをリロードするapi
           fetch('/load-msg?room_id=1',{
               method:'POST',
               headers:{
@@ -49,6 +50,7 @@ class Chat extends React.Component {
         });
     }
 
+    //表示時に部屋情報ロード（useEffect）
     loadRooms(){
       let role = document.querySelector('meta[name="role"]').getAttribute("content");
         let tok = document.querySelector('meta[name="csrf-token"]').content;
@@ -73,6 +75,7 @@ class Chat extends React.Component {
         }); 
     }
 
+    //表示されたroomをクリックすると該当roomの全メッセージが表示
     loadChats(el_id){
         let clicked_room_id = el_id.target.id;
         let tok = document.querySelector('meta[name="csrf-token"]').content;
@@ -140,7 +143,7 @@ class Chat extends React.Component {
         
     }
 
-
+    //表示時にpusher・チャンネル接続(useEffect)
     subscribeToPusher(){
         let a_tok = document.querySelector('meta[name="csrf-token"]').content;
         Pusher.logToConsole = true;
@@ -153,6 +156,7 @@ class Chat extends React.Component {
           }
         });
         // var new_msg = [];
+        //SendMessage = 送信時にapi接続→接続先のapiでデータ保存＋pusherにmessage送信
         var channel = pusher.subscribe('send-message');
         channel.bind('App\\Events\\SendMessage', function(d) {
           // console.log("you have a new message:"+JSON.stringify(d));
@@ -187,7 +191,7 @@ class Chat extends React.Component {
                             </div>
                             <div className="card-footer">
                                 <input type="text" id="chat_tbox" className="form-control" placeholder="Enter message..." />
-                                <input type="submit" className="btn btn-primary btn-sm" value="GO" onClick={this.handleEve} />
+                                <input type="submit" className="btn btn-primary btn-sm" value="送信" onClick={this.handleEve} />
                             </div>
                         </div>
                     </div>

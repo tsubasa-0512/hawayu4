@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+
 import UserInfo from './UserInfo';
 import AddChatRoom from '../chats/AddChatRoom';
+import Chat from '../chats/Chat';
+import ChatPage from '../chats/ChatPage';
+import MoveChatPage from '../chats/MoveChatPage';
 
 function UserMyPage() {
     const [user, setUser] = useState([]);
@@ -39,9 +43,13 @@ function UserMyPage() {
         company_id={user.company_id}
         created_at={user.created_at}
         />
-        <AddChatRoom 
+        <MoveChatPage 
+       />
+        {/* <AddChatRoom 
         user_id = {user.id}
-        />
+        /> */}
+        {/* <ChatPage 
+        user_name={user.name}/> */}
       </>
     )
 }
