@@ -13,7 +13,6 @@ import Home from './pages/Home';
         <div>
             <Switch>
                 <Route path='/example' exact component={Example} />
-
                 <Route path='/' exact component={Home} />
             </Switch>
         </div>

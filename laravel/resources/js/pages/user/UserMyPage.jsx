@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
 import UserInfo from './UserInfo';
-import AddChatRoom from '../chats/AddChatRoom';
-import Chat from '../chats/Chat';
-import ChatPage from '../chats/ChatPage';
 import MoveChatPage from '../chats/MoveChatPage';
 
-function UserMyPage() {
+
+function UserMyPage(props) {
+
     const [user, setUser] = useState([]);
 
     const api_token=
@@ -36,6 +34,7 @@ function UserMyPage() {
     return (
         <>
         <SH1>User My Page</SH1>
+
         <UserInfo 
         user_id = {user.id}
         user_name={user.name}
@@ -43,8 +42,8 @@ function UserMyPage() {
         company_id={user.company_id}
         created_at={user.created_at}
         />
-        <MoveChatPage 
-       />
+         <MoveChatPage />
+
         {/* <AddChatRoom 
         user_id = {user.id}
         /> */}

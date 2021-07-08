@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
+import { UserContext } from '../user/UserProvider';
 
-function Chat({user_name,operator_id,operator_name}) {
+function Chat({ope_id}) {
     //チャットメッセージ
     const [msg_list, setMsg_list] = useState([]);
     //チャットルーム
@@ -71,6 +72,10 @@ function Chat({user_name,operator_id,operator_name}) {
     
     //チャット入力
     //入力内容の保存
+    const {user, setUser} = useContext(UserContext)
+    // const user_id = user.id;
+
+
     const [inputChat, setInputChat] = useState("");
         const handleInputChange =(e)=>{
             console.log(e,"event");
@@ -85,8 +90,21 @@ function Chat({user_name,operator_id,operator_name}) {
         // let data = new FormData();
         // data.append('message','msg');
 
-        //ユーザー画面からだとoperator_idがなくてエラーになる→ログイン中のユーザー・オペレーターのidを渡してください
-        fetch('/messages?message='+inputChat+'&id='+1+'&role='+role+'&room_id='+room_id,{
+        //roleによってログイン中のidを返す
+        let senderId =""
+        if (role === "user"){
+            senderId = user.id;
+        }else {
+            senderId = ope_id;
+        }
+      
+        fetch('/messages?message='+inputChat+
+        '&role='+role+
+        '&id='+senderId+
+        '&room_id='+room_id,
+        // '&user_id=' + {user_id}+,
+        // '&operator_id=' + {operator_id},{
+            {
             method:'POST',
             headers:{
               'Content-Type':'application/json',
@@ -107,6 +125,12 @@ function Chat({user_name,operator_id,operator_name}) {
         .catch((error) => {
             console.error(error);
         });
+    }
+
+    const onHandleKeyDown=(e)=>{
+        if(e.keyCode ===13){
+            onClickSendChats();
+        }
     }
         return (
             <div className="container">                
@@ -135,7 +159,10 @@ function Chat({user_name,operator_id,operator_name}) {
                                 <ul id="chat_list" className="chat_list list-group">
                                     {msg_list.map((msgs) =>
                                     <li className="list-group-item" id={msgs.id} key={msgs.id}>
-                                        {msgs.message}
+                                        {msgs.sender === "user" 
+                                        ? <div class="bg-success text-white float-left">{msgs.user_id}さん：{msgs.message}</div>
+                                        : <div class="bg-info text-white float-right">ハワユチーム：{msgs.message}</div> }
+                                        {/* {msgs.message} */}
                                     </li>)}
                                 </ul>
                             </div>
@@ -144,7 +171,9 @@ function Chat({user_name,operator_id,operator_name}) {
                                 placeholder="Enter message..." 
                                 value={inputChat}
                                 onChange={handleInputChange}/>
-                                <input type="submit" className="btn btn-primary btn-sm" value="送信" onClick={onClickSendChats} />
+                                <input type="submit" className="btn btn-primary btn-sm" 
+                                value="送信" onClick={onClickSendChats}
+                                   />
                             </div>
                         </div>
                     </div>
