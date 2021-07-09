@@ -1,5 +1,9 @@
 import React, { useEffect, useState,useContext } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+
 import { UserContext } from '../user/UserProvider';
+import { PrimaryButton } from '../../parts/PrimaryButton';
 
 function Chat({ope_id}) {
     //チャットメッセージ
@@ -13,11 +17,13 @@ function Chat({ope_id}) {
         loadRooms();
     },[])
 
+    const role = document.querySelector('meta[name="role"]').getAttribute("content");
+   
     //表示時に部屋情報ロード（useEffect）
     const loadRooms = async()=>{
-      const role = document.querySelector('meta[name="role"]').getAttribute("content");
       const tok = document.querySelector('meta[name="csrf-token"]').content;
-        await fetch('/rooms?role='+role,{
+   
+      await fetch('/rooms?role='+role,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -32,6 +38,7 @@ function Chat({ope_id}) {
                 arr.push(dat[x]);
             }
             setRoom_list(arr);
+            console.log("arr",arr)
         })
         .catch((error) => {
             console.error(error);
@@ -41,7 +48,7 @@ function Chat({ope_id}) {
     //表示されたroomをクリックすると該当roomの全メッセージを表示（onClick）
     const onClickLoadChats = async (el_id)=>{
         const clicked_room_id = el_id.target.id;
-     
+        console.log(el_id.target.id)
         let tok = document.querySelector('meta[name="csrf-token"]').content;
         // alert(el_id.target.id);
         await fetch('/load-msg?room_id='+clicked_room_id,{
@@ -63,6 +70,7 @@ function Chat({ope_id}) {
             setMsg_list(arr);
             // console.log("msg_list",msg_list)
             setRoom_id(clicked_room_id);
+            console.log('url','/load-msg?room_id='+clicked_room_id)
             // console.log("room_id",newRoomId)
         })
         .catch((error) => {
@@ -75,7 +83,6 @@ function Chat({ope_id}) {
     const {user, setUser} = useContext(UserContext)
     // const user_id = user.id;
 
-
     const [inputChat, setInputChat] = useState("");
         const handleInputChange =(e)=>{
             console.log(e,"event");
@@ -87,9 +94,27 @@ function Chat({ope_id}) {
         // const msg = document.getElementById('chat_tbox').value;
         const role = document.querySelector('meta[name="role"]').getAttribute("content");
         const tok = document.querySelector('meta[name="csrf-token"]').content;
-        // let data = new FormData();
-        // data.append('message','msg');
+        // const { room_id } = useParams()
+        //パラメータの取得
+        let urlParamStr = window.location.search
+        let params = {}
 
+        if (urlParamStr) {
+            //?を除去
+            urlParamStr = urlParamStr.substring(1)
+            //urlパラメータをオブジェクトにまとめる
+            urlParamStr.split('&').forEach( param => {
+              const temp = param.split('=')
+              //pramsオブジェクトにパラメータを追加
+              params = {
+                ...params,
+                [temp[0]]: temp[1]
+              }
+            })
+          }
+          console.log("paramsのroomid",params.roomid)
+          let room_id = params.roomid;
+        
         //roleによってログイン中のidを返す
         let senderId =""
         if (role === "user"){
@@ -143,12 +168,18 @@ function Chat({ope_id}) {
                                     {room_list.map((number) =>
                                     <a href="#" 
                                     key={number.id}>
-                                        <li id={number.id} 
+                                        <li id={number.id}
+                                        //  key={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
                                         部屋{number.id}
+                                        {/* <PrimaryButton>表示</PrimaryButton> */}
+                                        {role==="operator" && <PrimaryButton>参加</PrimaryButton>}
                                         </li>
-                                    </a>  )}
+                                    </a>
+        
+                                    )}
+                                        
                                 </ul>
                             </div>                            
                         </div>
@@ -160,15 +191,15 @@ function Chat({ope_id}) {
                                     {msg_list.map((msgs) =>
                                     <li className="list-group-item" id={msgs.id} key={msgs.id}>
                                         {msgs.sender === "user" 
-                                        ? <div class="bg-success text-white float-left">{msgs.user_id}さん：{msgs.message}</div>
-                                        : <div class="bg-info text-white float-right">ハワユチーム：{msgs.message}</div> }
+                                        ? <div className="bg-success text-white float-left">{msgs.user_id}さん：{msgs.message}</div>
+                                        : <div className="bg-info text-white float-right">ハワユチーム：{msgs.message}</div> }
                                         {/* {msgs.message} */}
                                     </li>)}
                                 </ul>
                             </div>
                             <div className="card-footer">
                                 <input type="text" id="chat_tbox" className="form-control" 
-                                placeholder="Enter message..." 
+                                placeholder="相談内容を入力して下さい" 
                                 value={inputChat}
                                 onChange={handleInputChange}/>
                                 <input type="submit" className="btn btn-primary btn-sm" 
@@ -182,4 +213,7 @@ function Chat({ope_id}) {
         );
     }
 
+    // const SDiv = styled.div`
+    //     display:none;
+    // `
 export default Chat;

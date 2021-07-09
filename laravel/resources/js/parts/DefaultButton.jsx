@@ -9,7 +9,7 @@ export const DefaultButton = styled.button`
     outline:none;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);
     display:block;
-    margin:10px auto;
+    margin:10px;
     &:hover{
     cursor:pointer;
     opacity:0.7;

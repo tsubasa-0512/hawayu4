@@ -72560,13 +72560,13 @@ function AddChatRoom() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SButton, {
     id: "addchat",
     onClick: OpenChatRoom
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SP, null, "\u65B0\u898F\u76F8\u8AC7")));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SP, null, "\u65B0\u3057\u304F\u76F8\u8AC7\u3059\u308B")));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (AddChatRoom);
 var SDiv = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    width:1000px;\n    margin:auto;\n    text-align:center;\n    display:flex;\n    justify-content: center;\n"])));
-var SButton = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].button(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    background-color:skyblue;\n    width:105px;\n    height:97px;\n    margin:10px auto;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
-var SP = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].p(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    line-height:97px;\n"])));
+var SButton = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].button(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    background-color:#FFCB72;\n    width:200px;\n    height:70px;\n    margin:10px auto;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
+var SP = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].p(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    line-height:70px;\n"])));
 
 /***/ }),
 
@@ -72583,7 +72583,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _user_UserProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../user/UserProvider */ "./resources/js/pages/user/UserProvider.jsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _user_UserProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../user/UserProvider */ "./resources/js/pages/user/UserProvider.jsx");
+/* harmony import */ var _parts_PrimaryButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../parts/PrimaryButton */ "./resources/js/parts/PrimaryButton.jsx");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -72591,6 +72595,12 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -72609,6 +72619,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
 
 
 
@@ -72636,18 +72649,18 @@ function Chat(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     loadRooms();
-  }, []); //表示時に部屋情報ロード（useEffect）
+  }, []);
+  var role = document.querySelector('meta[name="role"]').getAttribute("content"); //表示時に部屋情報ロード（useEffect）
 
   var loadRooms = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var role, tok;
+      var tok;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              role = document.querySelector('meta[name="role"]').getAttribute("content");
               tok = document.querySelector('meta[name="csrf-token"]').content;
-              _context.next = 4;
+              _context.next = 3;
               return fetch('/rooms?role=' + role, {
                 method: 'POST',
                 headers: {
@@ -72665,11 +72678,12 @@ function Chat(_ref) {
                 }
 
                 setRoom_list(arr);
+                console.log("arr", arr);
               })["catch"](function (error) {
                 console.error(error);
               });
 
-            case 4:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -72691,9 +72705,10 @@ function Chat(_ref) {
           switch (_context2.prev = _context2.next) {
             case 0:
               clicked_room_id = el_id.target.id;
+              console.log(el_id.target.id);
               tok = document.querySelector('meta[name="csrf-token"]').content; // alert(el_id.target.id);
 
-              _context2.next = 4;
+              _context2.next = 5;
               return fetch('/load-msg?room_id=' + clicked_room_id, {
                 method: 'POST',
                 headers: {
@@ -72715,12 +72730,13 @@ function Chat(_ref) {
                 setMsg_list(arr); // console.log("msg_list",msg_list)
 
                 // console.log("msg_list",msg_list)
-                setRoom_id(clicked_room_id); // console.log("room_id",newRoomId)
+                setRoom_id(clicked_room_id);
+                console.log('url', '/load-msg?room_id=' + clicked_room_id); // console.log("room_id",newRoomId)
               })["catch"](function (error) {
                 console.error(error);
               });
 
-            case 4:
+            case 5:
             case "end":
               return _context2.stop();
           }
@@ -72735,7 +72751,7 @@ function Chat(_ref) {
   //入力内容の保存
 
 
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_user_UserProvider__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_user_UserProvider__WEBPACK_IMPORTED_MODULE_4__["UserContext"]),
       user = _useContext.user,
       setUser = _useContext.setUser; // const user_id = user.id;
 
@@ -72754,9 +72770,25 @@ function Chat(_ref) {
   var onClickSendChats = function onClickSendChats(e) {
     // const msg = document.getElementById('chat_tbox').value;
     var role = document.querySelector('meta[name="role"]').getAttribute("content");
-    var tok = document.querySelector('meta[name="csrf-token"]').content; // let data = new FormData();
-    // data.append('message','msg');
-    //roleによってログイン中のidを返す
+    var tok = document.querySelector('meta[name="csrf-token"]').content; // const { room_id } = useParams()
+    //パラメータの取得
+
+    var urlParamStr = window.location.search;
+    var params = {};
+
+    if (urlParamStr) {
+      //?を除去
+      urlParamStr = urlParamStr.substring(1); //urlパラメータをオブジェクトにまとめる
+
+      urlParamStr.split('&').forEach(function (param) {
+        var temp = param.split('='); //pramsオブジェクトにパラメータを追加
+
+        params = _objectSpread(_objectSpread({}, params), {}, _defineProperty({}, temp[0], temp[1]));
+      });
+    }
+
+    console.log("paramsのroomid", params.roomid);
+    var room_id = params.roomid; //roleによってログイン中のidを返す
 
     var senderId = "";
 
@@ -72816,10 +72848,11 @@ function Chat(_ref) {
       href: "#",
       key: number.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
-      id: number.id,
+      id: number.id //  key={number.id} 
+      ,
       onClick: onClickLoadChats,
       className: "list-group-item list-group-item-action"
-    }, "\u90E8\u5C4B", number.id));
+    }, "\u90E8\u5C4B", number.id, role === "operator" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_parts_PrimaryButton__WEBPACK_IMPORTED_MODULE_5__["PrimaryButton"], null, "\u53C2\u52A0")));
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -72835,9 +72868,9 @@ function Chat(_ref) {
       id: msgs.id,
       key: msgs.id
     }, msgs.sender === "user" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-      "class": "bg-success text-white float-left"
+      className: "bg-success text-white float-left"
     }, msgs.user_id, "\u3055\u3093\uFF1A", msgs.message) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-      "class": "bg-info text-white float-right"
+      className: "bg-info text-white float-right"
     }, "\u30CF\u30EF\u30E6\u30C1\u30FC\u30E0\uFF1A", msgs.message));
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "card-footer"
@@ -72845,7 +72878,7 @@ function Chat(_ref) {
     type: "text",
     id: "chat_tbox",
     className: "form-control",
-    placeholder: "Enter message...",
+    placeholder: "\u76F8\u8AC7\u5185\u5BB9\u3092\u5165\u529B\u3057\u3066\u4E0B\u3055\u3044",
     value: inputChat,
     onChange: handleInputChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
@@ -72854,7 +72887,10 @@ function Chat(_ref) {
     value: "\u9001\u4FE1",
     onClick: onClickSendChats
   }))))));
-}
+} // const SDiv = styled.div`
+//     display:none;
+// `
+
 
 /* harmony default export */ __webpack_exports__["default"] = (Chat);
 
@@ -73288,7 +73324,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _UserInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserInfo */ "./resources/js/pages/user/UserInfo.jsx");
 /* harmony import */ var _chats_MoveChatPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../chats/MoveChatPage */ "./resources/js/pages/chats/MoveChatPage.jsx");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5;
+/* harmony import */ var _parts_DefaultButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../parts/DefaultButton */ "./resources/js/parts/DefaultButton.jsx");
+var _templateObject, _templateObject2, _templateObject3;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -73309,6 +73346,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -73355,20 +73393,18 @@ function UserMyPage(props) {
     };
   }();
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SH1, null, "User My Page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UserInfo__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SH1, null, "User My Page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UserInfo__WEBPACK_IMPORTED_MODULE_4__["default"], {
     user_id: user.id,
     user_name: user.name,
     email: user.email,
     company_id: user.company_id,
     created_at: user.created_at
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_chats_MoveChatPage__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(HAwayuButton, null, "\u30CF\u30EF\u30E6\uFF1F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_chats_MoveChatPage__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
 }
 
-var SBox = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    background-color:#FED7D7;\n    width:20%;\n    color:gray;\n    box-shadow:2px 2px 4px gray;\n"])));
-var S2Box = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    background-color:#FFF5F5;\n    width:40%;\n    color:gray;\n    box-shadow:2px 2px 4px gray;\n"])));
-var SH1 = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].h1(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    text-align:center;\n    color: palevioletred;\n"])));
-var SImage = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].img(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    border-radius:100%;\n"])));
-var SDiv = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    display:flex;\n    text-align:center;\n    justify-content: center;\n    "])));
+var SH1 = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].h1(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    text-align:center;\n    color: palevioletred;\n"])));
+var SDiv = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display:flex;\n    text-align:center;\n    align-items: center;\n    justify-content: center;\n    "])));
+var HAwayuButton = Object(styled_components__WEBPACK_IMPORTED_MODULE_3__["default"])(_parts_DefaultButton__WEBPACK_IMPORTED_MODULE_6__["DefaultButton"])(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    background-color:#abedd8;\n    width:200px;\n    height:97px;\n    margin:10px;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
 /* harmony default export */ __webpack_exports__["default"] = (UserMyPage); // if (document.getElementById('usermypage')) {
 //     ReactDOM.render(<UserMyPage />, document.getElementById('usermypage'));
 // }
@@ -73483,7 +73519,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 // ボタンのベースデザイン
  // 共通デザインを書く
 
-var DefaultButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    padding:6px 24px:\n    border:none;\n    border-radius:9999px;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n    display:block;\n    margin:10px auto;\n    &:hover{\n    cursor:pointer;\n    opacity:0.7;\n\n"])));
+var DefaultButton = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    padding:6px 24px:\n    border:none;\n    border-radius:9999px;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n    display:block;\n    margin:10px;\n    &:hover{\n    cursor:pointer;\n    opacity:0.7;\n\n"])));
 
 /***/ }),
 
@@ -73501,7 +73537,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _DefaultButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DefaultButton */ "./resources/js/parts/DefaultButton.jsx");
-var _templateObject, _templateObject2;
+var _templateObject;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -73512,13 +73548,19 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 var MenuButton = function MenuButton(props) {
   var children = props.children,
       onClick = props.onClick;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SButton, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SButton, {
     onClick: onClick
-  }, children));
+  }, children);
 }; // 既存のcomponent　にさらにcssを上書きする
+// const SDiv = styled.div `
+//     width:1000px;
+//     margin:auto;
+//     text-align:center;
+//     display:flex;
+//     justify-content: center;
+// `
 
-var SDiv = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    width:1000px;\n    margin:auto;\n    text-align:center;\n    display:flex;\n    justify-content: center;\n"])));
-var SButton = Object(styled_components__WEBPACK_IMPORTED_MODULE_1__["default"])(_DefaultButton__WEBPACK_IMPORTED_MODULE_2__["DefaultButton"])(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    background-color:green;\n    width:105px;\n    height:97px;\n    margin:10px auto;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
+var SButton = Object(styled_components__WEBPACK_IMPORTED_MODULE_1__["default"])(_DefaultButton__WEBPACK_IMPORTED_MODULE_2__["DefaultButton"])(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    background-color:skyblue;\n    width:105px;\n    height:97px;\n    margin:10px;\n    border:none;\n    border-radius:30%;\n    outline:none;\n    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);\n"])));
 
 /***/ }),
 
