@@ -9,7 +9,7 @@ function Chat({user_name,operator_id,operator_name}) {
     const [room_id, setRoom_id] = useState();
 
     useEffect(() => {
-        loadRooms();
+        loadRooms();        
     },[])
 
     //表示時に部屋情報ロード（useEffect）
@@ -40,10 +40,11 @@ function Chat({user_name,operator_id,operator_name}) {
     //表示されたroomをクリックすると該当roomの全メッセージを表示（onClick）
     const onClickLoadChats = async (el_id)=>{
         const clicked_room_id = el_id.target.id;
+        // console.log(clicked_room_id)
      
         let tok = document.querySelector('meta[name="csrf-token"]').content;
         // alert(el_id.target.id);
-        await fetch('/load-msg?room_id='+clicked_room_id,{
+        await fetch(`/load-msg?room_id=${clicked_room_id}`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -113,9 +114,9 @@ function Chat({user_name,operator_id,operator_name}) {
                 <div className="row no-gutters">
                     <div className="col-3">
                         <div className="card">
-                            <div className="card-header">card header</div>
+                            <div className="card-header">チャット一覧</div>
                             <div className="card-body">
-                                <ul id="user_list" className="user_list list-group">
+                                <ul id="room_list" className="room_list list-group">
                                     {room_list.map((number) =>
                                     <a href="#" 
                                     key={number.id}>

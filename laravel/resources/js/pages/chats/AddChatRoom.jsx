@@ -23,8 +23,8 @@ function AddChatRoom () {
             // setRoom(roomres.data);
         // })
         .then((res)=>{
-            const roomId = res.data.id
-            location.href = "/chatpage?roomid="+res.data.id;
+            console.log(res.data.id)
+            location.href = "/chatpage?roomid="+res.data.id
             // location.href="/chatpage"
             // console.log("roomid",res.data)
                 // console.log("チャットルームを作りました")
