@@ -6,25 +6,26 @@ import { DefaultButton } from './DefaultButton';
 export const MenuButton=(props)=> {
     const{ children,onClick } = props;
     return (
+        <SDiv>
             <SButton onClick={onClick}>{children}</SButton>
-     
+        </SDiv>
     )
 }
 
 // 既存のcomponent　にさらにcssを上書きする
 
-// const SDiv = styled.div `
-//     width:1000px;
-//     margin:auto;
-//     text-align:center;
-//     display:flex;
-//     justify-content: center;
-// `
+const SDiv = styled.div `
+    width:1000px;
+    margin:auto;
+    text-align:center;
+    display:flex;
+    justify-content: center;
+`
 const SButton = styled(DefaultButton)`
-    background-color:skyblue;
+    background-color:green;
     width:105px;
     height:97px;
-    margin:10px;
+    margin:10px auto;
     border:none;
     border-radius:30%;
     outline:none;

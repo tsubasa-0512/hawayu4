@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
 import UserInfo from './UserInfo';
+import AddChatRoom from '../chats/AddChatRoom';
+import Chat from '../chats/Chat';
+import ChatPage from '../chats/ChatPage';
 import MoveChatPage from '../chats/MoveChatPage';
-import { DefaultButton } from '../../parts/DefaultButton';
 
-function UserMyPage(props) {
-
+function UserMyPage() {
     const [user, setUser] = useState([]);
 
     const api_token=
@@ -32,9 +34,8 @@ function UserMyPage(props) {
                 }
 
     return (
-        <div>
+        <>
         <SH1>User My Page</SH1>
-
         <UserInfo 
         user_id = {user.id}
         user_name={user.name}
@@ -42,41 +43,40 @@ function UserMyPage(props) {
         company_id={user.company_id}
         created_at={user.created_at}
         />
-
-        <SDiv>
-        <HAwayuButton >ハワユ？</HAwayuButton>
-        <MoveChatPage />
-        </SDiv>
+        <MoveChatPage 
+       />
         {/* <AddChatRoom 
         user_id = {user.id}
         /> */}
         {/* <ChatPage 
         user_name={user.name}/> */}
-      </div>
+      </>
     )
 }
-
+const SBox = styled.div`
+    background-color:#FED7D7;
+    width:20%;
+    color:gray;
+    box-shadow:2px 2px 4px gray;
+`
+const S2Box = styled.div`
+    background-color:#FFF5F5;
+    width:40%;
+    color:gray;
+    box-shadow:2px 2px 4px gray;
+`
 const SH1 = styled.h1`
     text-align:center;
     color: palevioletred;
 `
+const SImage = styled.img`
+    border-radius:100%;
+`
 const SDiv = styled.div`
     display:flex;
     text-align:center;
-    align-items: center;
     justify-content: center;
     `
-const HAwayuButton = styled(DefaultButton)`
-    background-color:#abedd8;
-    width:200px;
-    height:97px;
-    margin:10px;
-    border:none;
-    border-radius:30%;
-    outline:none;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);
-`
-   
 export default UserMyPage;
 
 // if (document.getElementById('usermypage')) {

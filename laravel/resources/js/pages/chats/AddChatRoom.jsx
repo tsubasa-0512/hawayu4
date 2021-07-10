@@ -23,8 +23,8 @@ function AddChatRoom () {
             // setRoom(roomres.data);
         // })
         .then((res)=>{
-            const roomId = res.data.id
-            location.href = "/chatpage?roomid="+res.data.id;
+            console.log(res.data.id)
+            location.href = "/chatpage?roomid="+res.data.id
             // location.href="/chatpage"
             // console.log("roomid",res.data)
                 // console.log("チャットルームを作りました")
@@ -38,7 +38,7 @@ function AddChatRoom () {
     return (
         <SDiv>
             <SButton id="addchat" onClick={OpenChatRoom}>
-                <SP>新しく相談する</SP>
+                <SP>新規相談</SP>
             </SButton>
         </SDiv>
     )
@@ -55,9 +55,9 @@ const SDiv = styled.div `
 `
 
 const SButton = styled.button`
-    background-color:#FFCB72;
-    width:200px;
-    height:70px;
+    background-color:skyblue;
+    width:105px;
+    height:97px;
     margin:10px auto;
     border:none;
     border-radius:30%;
@@ -66,5 +66,5 @@ const SButton = styled.button`
 `
 
 const SP = styled.p`
-    line-height:70px;
+    line-height:97px;
 `

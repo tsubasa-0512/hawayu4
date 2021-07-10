@@ -45,7 +45,6 @@ class RoomsController extends Controller
         ->select('messages.*','users.name')
         ->get();
 
-
         return json_encode($msg_list);
     }
 
