@@ -39,8 +39,11 @@ class RoomsController extends Controller
     public function loadMessage(Request $request) {
         $room_id = $request->room_id;
         
-        $msg_list = Message::where('room_id', $room_id)->get();
-
+        $msg_list = DB::table('messages')
+        ->leftJoin('users', 'users.id', '=', 'messages.user_id')
+        ->select('messages.*','users.name')
+        ->get();
+        
         return json_encode($msg_list);
     }
 
