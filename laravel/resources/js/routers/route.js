@@ -11,7 +11,8 @@ import { DefaultLayout } from '../pages/layouts/DefaultLayout';
 import { userRoutes } from './userRoutes';
 import { opeRoutes } from './opeRoutes';
 import ChatPage from '../pages/chats/ChatPage';
-
+import UserProvider from '../pages/user/UserProvider';
+import OpeProvider from '../pages/operators/OpeProvider';
 
   function App() {
     return (
@@ -32,23 +33,26 @@ import ChatPage from '../pages/chats/ChatPage';
                    </DefaultLayout>
                  </Route>
 
-                <Route 
-                  path ="/user"
-                  render ={({match:{url}})=>(
-                    <Switch>
-                      {userRoutes.map((route)=>(
-                        <Route
-                          key={route.path}
-                          exact={route.exact}
-                          path={`${url}${route.path}`}
-                      >
-                        <DefaultLayout>{route.children}</DefaultLayout>
-                        </Route>
+                {/* <UserProvider> */}
+                  <Route 
+                    path ="/user"
+                    render ={({match:{url}})=>(
+                      <Switch>
+                        {userRoutes.map((route)=>(
+                          <Route
+                            key={route.path}
+                            exact={route.exact}
+                            path={`${url}${route.path}`}
+                        >
+                          <DefaultLayout>{route.children}</DefaultLayout>
+                          </Route>
                   ))}
                     </Switch>
                   )}
                   />
+                  {/* </UserProvider> */}
 
+                {/* <OpeProvider> */}
                 <Route 
                   path ="/operator"
                   render ={({match:{url}})=>(
@@ -65,6 +69,7 @@ import ChatPage from '../pages/chats/ChatPage';
                     </Switch>
                   )}
                   />
+                  {/* </OpeProvider> */}
                 {/* //  <DefaultLayout>
                 //  <Route path='/operator/home' exact component={OpeMyPage} />
                 //  </DefaultLayout>
