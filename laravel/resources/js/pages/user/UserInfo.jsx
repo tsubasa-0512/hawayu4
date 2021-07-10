@@ -4,27 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const UserInfo= ({user_id,user_name,email,company_id,created_at}) =>{
-    // const [user, setUser] = useState([]);
-
-    // const api_token=
-    // document
-    // .querySelector('meta[name="api-token"]')
-    // .getAttribute("content");
-
-    // useEffect(() => {
-    //     getUser()
-    // },[])
-    // const getUser = async () => {
-    //     console.log("URL",`/api/user?api_token=${api_token}`)
-    //      await axios
-    //     .get(`/api/user?api_token=${api_token}`)
-    //     .then( (res) => {
-    //             console.log("user",res.data)
-    //                 setUser(res.data);
-    //             }).catch(error => {
-    //                  console.log('Error',error.response);
-    //                      });
-    //             }
+   
     return (
         <>
         <SDiv>
