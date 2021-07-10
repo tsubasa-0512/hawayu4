@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Chat from '../chats/Chat';
@@ -14,7 +15,8 @@ function OpeMyPage() {
     useEffect(() => {
         getOperator()
     },[])
-
+    
+        
     const getOperator = async () => {
         console.log("URL",`/api/operator?api_token=${api_token}`)
          await axios
@@ -55,12 +57,11 @@ function OpeMyPage() {
                 <dt>登録日</dt>
                 <dd>{operator.created_at}</dd>
              </S2Box>
-
-             <Chat 
-             ope_id = {operator.id}
-             />
       </SDiv>
-    
+      <Chat 
+      operator_id={operator.id}
+      operator_name={operator.name}
+      />
       </>
     )
 }

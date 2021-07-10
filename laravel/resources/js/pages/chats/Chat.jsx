@@ -1,11 +1,6 @@
-import React, { useEffect, useState,useContext } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 
-import { UserContext } from '../user/UserProvider';
-import { PrimaryButton } from '../../parts/PrimaryButton';
-
-function Chat({ope_id}) {
+function Chat({user_name,operator_id,operator_name}) {
     //チャットメッセージ
     const [msg_list, setMsg_list] = useState([]);
     //チャットルーム
@@ -17,13 +12,11 @@ function Chat({ope_id}) {
         loadRooms();        
     },[])
 
-    const role = document.querySelector('meta[name="role"]').getAttribute("content");
-   
     //表示時に部屋情報ロード（useEffect）
     const loadRooms = async()=>{
+      const role = document.querySelector('meta[name="role"]').getAttribute("content");
       const tok = document.querySelector('meta[name="csrf-token"]').content;
-   
-      await fetch('/rooms?role='+role,{
+        await fetch('/rooms?role='+role,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -38,7 +31,6 @@ function Chat({ope_id}) {
                 arr.push(dat[x]);
             }
             setRoom_list(arr);
-            console.log("arr",arr)
         })
         .catch((error) => {
             console.error(error);
@@ -50,7 +42,6 @@ function Chat({ope_id}) {
         const clicked_room_id = el_id.target.id;
         // console.log(clicked_room_id)
      
-        console.log(el_id.target.id)
         let tok = document.querySelector('meta[name="csrf-token"]').content;
         // alert(el_id.target.id);
         await fetch(`/load-msg?room_id=${clicked_room_id}`,{
@@ -72,7 +63,6 @@ function Chat({ope_id}) {
             setMsg_list(arr);
             // console.log("msg_list",msg_list)
             setRoom_id(clicked_room_id);
-            console.log('url','/load-msg?room_id='+clicked_room_id)
             // console.log("room_id",newRoomId)
         })
         .catch((error) => {
@@ -82,9 +72,6 @@ function Chat({ope_id}) {
     
     //チャット入力
     //入力内容の保存
-    const {user, setUser} = useContext(UserContext)
-    // const user_id = user.id;
-
     const [inputChat, setInputChat] = useState("");
         const handleInputChange =(e)=>{
             console.log(e,"event");
@@ -96,42 +83,11 @@ function Chat({ope_id}) {
         // const msg = document.getElementById('chat_tbox').value;
         const role = document.querySelector('meta[name="role"]').getAttribute("content");
         const tok = document.querySelector('meta[name="csrf-token"]').content;
-        // const { room_id } = useParams()
-        //パラメータの取得
-        let urlParamStr = window.location.search
-        let params = {}
+        // let data = new FormData();
+        // data.append('message','msg');
 
-        if (urlParamStr) {
-            //?を除去
-            urlParamStr = urlParamStr.substring(1)
-            //urlパラメータをオブジェクトにまとめる
-            urlParamStr.split('&').forEach( param => {
-              const temp = param.split('=')
-              //pramsオブジェクトにパラメータを追加
-              params = {
-                ...params,
-                [temp[0]]: temp[1]
-              }
-            })
-          }
-          console.log("paramsのroomid",params.roomid)
-          let room_id = params.roomid;
-        
-        //roleによってログイン中のidを返す
-        let senderId =""
-        if (role === "user"){
-            senderId = user.id;
-        }else {
-            senderId = ope_id;
-        }
-      
-        fetch('/messages?message='+inputChat+
-        '&role='+role+
-        '&id='+senderId+
-        '&room_id='+room_id,
-        // '&user_id=' + {user_id}+,
-        // '&operator_id=' + {operator_id},{
-            {
+        //ユーザー画面からだとoperator_idがなくてエラーになる→ログイン中のユーザー・オペレーターのidを渡してください
+        fetch('/messages?message='+inputChat+'&id='+1+'&role='+role+'&room_id='+room_id,{
             method:'POST',
             headers:{
               'Content-Type':'application/json',
@@ -153,12 +109,6 @@ function Chat({ope_id}) {
             console.error(error);
         });
     }
-
-    const onHandleKeyDown=(e)=>{
-        if(e.keyCode ===13){
-            onClickSendChats();
-        }
-    }
         return (
             <div className="container">                
                 <div className="row no-gutters">
@@ -170,18 +120,12 @@ function Chat({ope_id}) {
                                     {room_list.map((number) =>
                                     <a href="#" 
                                     key={number.id}>
-                                        <li id={number.id}
-                                        //  key={number.id} 
+                                        <li id={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
                                         部屋{number.id}
-                                        {/* <PrimaryButton>表示</PrimaryButton> */}
-                                        {role==="operator" && <PrimaryButton>参加</PrimaryButton>}
                                         </li>
-                                    </a>
-        
-                                    )}
-                                        
+                                    </a>  )}
                                 </ul>
                             </div>                            
                         </div>
@@ -192,21 +136,16 @@ function Chat({ope_id}) {
                                 <ul id="chat_list" className="chat_list list-group">
                                     {msg_list.map((msgs) =>
                                     <li className="list-group-item" id={msgs.id} key={msgs.id}>
-                                        {msgs.sender === "user" 
-                                        ? <div className="bg-success text-white float-left">{msgs.user_id}さん：{msgs.message}</div>
-                                        : <div className="bg-info text-white float-right">ハワユチーム：{msgs.message}</div> }
-                                        {/* {msgs.message} */}
+                                        {msgs.message}
                                     </li>)}
                                 </ul>
                             </div>
                             <div className="card-footer">
                                 <input type="text" id="chat_tbox" className="form-control" 
-                                placeholder="相談内容を入力して下さい" 
+                                placeholder="Enter message..." 
                                 value={inputChat}
                                 onChange={handleInputChange}/>
-                                <input type="submit" className="btn btn-primary btn-sm" 
-                                value="送信" onClick={onClickSendChats}
-                                   />
+                                <input type="submit" className="btn btn-primary btn-sm" value="送信" onClick={onClickSendChats} />
                             </div>
                         </div>
                     </div>
@@ -215,7 +154,4 @@ function Chat({ope_id}) {
         );
     }
 
-    // const SDiv = styled.div`
-    //     display:none;
-    // `
 export default Chat;
