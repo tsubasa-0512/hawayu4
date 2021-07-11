@@ -201,9 +201,18 @@ function Chat({ope_id}) {
     // }
 
     //保健師がルームに入る
-    const onClickJoinRoom =()=>{
-alert("join")
-    }
+    const onClickJoinRoom =async () =>{
+       await axios.post ('/join-room',{api_token},{csrf_token},{room_id})
+    .then(()=>{
+        
+        location.href = "/chatpage?roomid="+room_id;
+        alert("joinしました")
+            }).catch(error => {
+                 console.log('Error',error.response);
+                     });
+            }
+
+
         return (
             <>
             <div className="container">               
@@ -227,7 +236,6 @@ alert("join")
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
                                         部屋{number.id}
-                                        {/* <PrimaryButton>表示</PrimaryButton> */}
                                         {role==="operator" && <PrimaryButton onClick={onClickJoinRoom}>参加</PrimaryButton>}
                                         </li>
                                     </a>
@@ -238,6 +246,8 @@ alert("join")
                             </div>                            
                         </div>
                     </div>
+                    {/* チャット表示欄 */}
+                    {room_id  && (
                     <div className="col">
                         <div className="card">
                             <div className="card-body">
@@ -278,6 +288,8 @@ alert("join")
                                 </ul>
                                 </SChatdiv>
                             </div>
+                            
+                    {/* チャット入力欄 */}
                             <div className="card-footer">
                                 <input type="text" id="chat_tbox" className="form-control" 
                                 placeholder="内容を入力して下さい" 
@@ -290,39 +302,12 @@ alert("join")
                             </div>
                         </div>
                     </div>
+                    )}
                 </div>
             </div>
             </>
         );
     }
-
-    // const SDiv = styled.div`
-    //     display:none;
-    // `
-
-    //open room用のCSS
-    const SDiv = styled.div `
-    width:1000px;
-    margin:auto;
-    text-align:center;
-    display:flex;
-    justify-content: center;
-`
-
-const SButton = styled.button`
-    background-color:#FFCB72;
-    width:200px;
-    height:70px;
-    margin:10px auto;
-    border:none;
-    border-radius:30%;
-    outline:none;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);
-`
-
-// const SP = styled.p`
-//     line-height:70px;
-// `
 
 //吹き出し用CSS
 const SChatdiv = styled.div `
