@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 Route::group(['middleware' => ['auth:operator_api']], function () {
     // 未対応ルーム情報取得
     Route::get('/backlog', 'RoomsController@backlog');
-    // 保健師のroom参加
+    // 保健師のroom参加（room ID）
     Route::post('/join-room','RoomsController@join');
     // 対応中ルーム情報取得
     Route::get('/wip', 'RoomsController@wip');

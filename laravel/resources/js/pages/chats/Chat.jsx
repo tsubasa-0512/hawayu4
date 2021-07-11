@@ -1,9 +1,12 @@
 import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import { Button,Box,ChakraProvider} from "@chakra-ui/react"
+import { AddIcon } from '@chakra-ui/icons'
 
 import { UserContext } from '../user/UserProvider';
 import { PrimaryButton } from '../../parts/PrimaryButton';
+import team from '../../images/team.png';
 
 function Chat({ope_id}) {
     //チャットメッセージ
@@ -45,6 +48,43 @@ function Chat({ope_id}) {
         }); 
     }
 
+//新しくチャットルームを作る
+    const onClickOpenChatRoom = async () => {
+        const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content")
+
+        const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
+
+        await axios
+        .post(`/api/create-room`,{api_token},{csrf_token})
+        
+        // .then( (roomres) => {
+        //     setRoom(roomres.data);
+        // })
+        .then((res)=>{
+           
+            // console.log("roomid",room_id)
+            setRoom_id(res.data.id)
+            location.href = "/chatpage?roomid="+res.data.id;
+
+            // console.log("dataid",res.data.id)
+            // location.href="/chatpage"
+            // console.log("roomid",res.data)
+                // console.log("チャットルームを作りました")
+                // e.preventDefault();
+                // history.push("/chatpage");
+                // console.log(dataId)
+                
+                })     
+        
+        .catch(error => {
+                     console.log('Error',error.response);
+                         });
+                }
+    
     //表示されたroomをクリックすると該当roomの全メッセージを表示（onClick）
     const onClickLoadChats = async (el_id)=>{
         const clicked_room_id = el_id.target.id;
@@ -61,6 +101,7 @@ function Chat({ope_id}) {
         })
         .then(response => response.json())
         .then(dat => {
+
             console.log("Json.stringify(dat)",JSON.stringify(dat));
             let arr = [];
             for(var x=0;x<dat.length;x++){
@@ -71,6 +112,7 @@ function Chat({ope_id}) {
             // console.log("msg_list",msg_list)
             setRoom_id(clicked_room_id);
             console.log('url','/load-msg?room_id='+clicked_room_id)
+          
             // console.log("room_id",newRoomId)
         })
         .catch((error) => {
@@ -96,24 +138,24 @@ function Chat({ope_id}) {
         const tok = document.querySelector('meta[name="csrf-token"]').content;
         // const { room_id } = useParams()
         //パラメータの取得
-        let urlParamStr = window.location.search
-        let params = {}
+        // let urlParamStr = window.location.search
+        // let params = {}
 
-        if (urlParamStr) {
-            //?を除去
-            urlParamStr = urlParamStr.substring(1)
-            //urlパラメータをオブジェクトにまとめる
-            urlParamStr.split('&').forEach( param => {
-              const temp = param.split('=')
-              //pramsオブジェクトにパラメータを追加
-              params = {
-                ...params,
-                [temp[0]]: temp[1]
-              }
-            })
-          }
-          console.log("paramsのroomid",params.roomid)
-          let room_id = params.roomid;
+        // if (urlParamStr) {
+        //     //?を除去
+        //     urlParamStr = urlParamStr.substring(1)
+        //     //urlパラメータをオブジェクトにまとめる
+        //     urlParamStr.split('&').forEach( param => {
+        //       const temp = param.split('=')
+        //       //pramsオブジェクトにパラメータを追加
+        //       params = {
+        //         ...params,
+        //         [temp[0]]: temp[1]
+        //       }
+        //     })
+        //   }
+        //   console.log("paramsのroomid",params.roomid)
+        //   let room_id = params.roomid;
         
         //roleによってログイン中のidを返す
         let senderId =""
@@ -152,21 +194,33 @@ function Chat({ope_id}) {
         });
     }
 
-    const onHandleKeyDown=(e)=>{
-        if(e.keyCode ===13){
-            onClickSendChats();
-        }
+    // const onHandleKeyDown=(e)=>{
+    //     if(e.keyCode ===13){
+    //         onClickSendChats();
+    //     }
+    // }
+
+    //保健師がルームに入る
+    const onClickJoinRoom =()=>{
+alert("join")
     }
         return (
-            <div className="container">                
+            <>
+            <div className="container">               
                 <div className="row no-gutters">
                     <div className="col-3">
                         <div className="card">
                             <div className="card-header">card header</div>
                             <div className="card-body">
                                 <ul id="user_list" className="user_list list-group">
+                                {role==="user" &&<ChakraProvider>
+                                    <Button leftIcon={<AddIcon />} 
+                                    bg="#FFE3D3" size="sm" onClick={onClickOpenChatRoom}>
+                                        新しく相談する
+                                    </Button>
+                                </ChakraProvider>}
                                     {room_list.map((number) =>
-                                    <a href="#" 
+                                    <a href="#"
                                     key={number.id}>
                                         <li id={number.id}
                                         //  key={number.id} 
@@ -174,7 +228,7 @@ function Chat({ope_id}) {
                                     className="list-group-item list-group-item-action" >
                                         部屋{number.id}
                                         {/* <PrimaryButton>表示</PrimaryButton> */}
-                                        {role==="operator" && <PrimaryButton>参加</PrimaryButton>}
+                                        {role==="operator" && <PrimaryButton onClick={onClickJoinRoom}>参加</PrimaryButton>}
                                         </li>
                                     </a>
         
@@ -187,20 +241,48 @@ function Chat({ope_id}) {
                     <div className="col">
                         <div className="card">
                             <div className="card-body">
+                                <SChatdiv>
                                 <ul id="chat_list" className="chat_list list-group">
                                     {msg_list.map((msgs) =>
                                     <li className="list-group-item" id={msgs.id} key={msgs.id}>
-                                        {msgs.sender === "user" 
-                                        ? <div className="bg-success text-white float-left">{msgs.user_id}さん：{msgs.message}</div>
-                                        : <div className="bg-info text-white float-right">ハワユチーム：{msgs.message}</div> }
-                                        {/* {msgs.message} */}
+                                          {msgs.sender === "user" 
+                                          //左（ユーザー）
+                                        ? <SLeftdiv>
+                                            <SChatting>
+                                                <SImage>
+                                                    <img
+                                                    src="https://source.unsplash.com/random"
+                                                    width= "150px"
+                                                    height ="150px"
+                                                    />
+                                                </SImage> 
+                                                <SSays>                       
+                                                    <p> {msgs.user_id}さん：{msgs.message}</p>
+                                                 </SSays>
+                                            </SChatting>
+                                          </SLeftdiv>
+                                          //右（産業保健師・看護師）
+                                        : <SRightdiv>
+                                            <SRImage>
+                                                <img
+                                                    src={team}
+                                                    width= "150px"
+                                                    height ="150px"
+                                                    />
+                                            </SRImage> 
+                                            <SRsays>
+                                            <p>ハワユチーム：{msgs.message}</p>
+                                            </SRsays>
+                                          </SRightdiv> }
                                     </li>)}
                                 </ul>
+                                </SChatdiv>
                             </div>
                             <div className="card-footer">
                                 <input type="text" id="chat_tbox" className="form-control" 
-                                placeholder="相談内容を入力して下さい" 
+                                placeholder="内容を入力して下さい" 
                                 value={inputChat}
+                               
                                 onChange={handleInputChange}/>
                                 <input type="submit" className="btn btn-primary btn-sm" 
                                 value="送信" onClick={onClickSendChats}
@@ -210,10 +292,137 @@ function Chat({ope_id}) {
                     </div>
                 </div>
             </div>
+            </>
         );
     }
 
     // const SDiv = styled.div`
     //     display:none;
     // `
+
+    //open room用のCSS
+    const SDiv = styled.div `
+    width:1000px;
+    margin:auto;
+    text-align:center;
+    display:flex;
+    justify-content: center;
+`
+
+const SButton = styled.button`
+    background-color:#FFCB72;
+    width:200px;
+    height:70px;
+    margin:10px auto;
+    border:none;
+    border-radius:30%;
+    outline:none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .2);
+`
+
+// const SP = styled.p`
+//     line-height:70px;
+// `
+
+//吹き出し用CSS
+const SChatdiv = styled.div `
+    padding: 20px 10px;
+    max-width: 450px;
+    margin: 15px auto;
+    text-align: right;
+    font-size: 14px;
+    background: #7da4cd;
+`
+const SLeftdiv = styled.div `
+    width: 100%;
+    margin: 10px 0;
+    overflow: hidden;
+`
+
+const SImage = styled.div`
+    float: left;
+    margin-right: -40px;
+    width: 70px;
+
+& img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+`
+const SSays = styled.div `
+    display: inline-block;
+    position: relative; 
+    margin: 0 0 0 50px;
+    padding: 10px;
+    max-width: 250px;
+    border-radius: 12px;
+    background: #edf1ee;
+
+&::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 3px; 
+    left: -19px;
+    border: 8px solid transparent;
+    border-right: 18px solid #edf1ee;
+    -webkit-transform: rotate(35deg);
+    transform: rotate(35deg);
+  }
+  & p {
+    margin: 0;
+    padding: 0;
+  }
+`
+
+const SChatting = styled.div `
+  width: 100%;
+  text-align: left; 
+`
+const SRightdiv = styled.div `
+    width: 100%;
+    margin: 10px 0;
+    overflow: hidden;
+`
+
+const SRsays = styled.div `
+display: inline-block;
+    position: relative; 
+    margin: 0 0 0 50px;
+    padding: 10px;
+    max-width: 300px;
+    border-radius: 12px;
+    background: #edf1ee;
+
+&::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 3px; 
+    right: -18px;
+    border: 8px solid transparent;
+    border-right: 18px solid #edf1ee;
+    -webkit-transform: rotate(140deg);
+    transform: rotate(140deg);
+  }
+  & p {
+    margin: 0;
+    padding: 0;
+    overflow-wrap: break-word;
+  }
+
+}
+`
+const SRImage = styled.div`
+    float: right;
+    margin-left: 10px;
+    width: 70px;
+
+& img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+`
 export default Chat;

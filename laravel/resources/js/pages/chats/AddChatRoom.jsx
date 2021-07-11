@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-
+import { Button, ButtonGroup } from "@chakra-ui/react"
+import { AddIcon } from '@chakra-ui/icons'
 
 function AddChatRoom () {
-    //ルーム情報
-   const [room, setRoom] = useState();
 
     const OpenChatRoom = async () => {
         const api_token = document
@@ -16,15 +14,13 @@ function AddChatRoom () {
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content")
 
-         await axios
+        await axios
         .post(`/api/create-room`,{api_token},{csrf_token})
-     
-        // .then( (roomres) => {
-            // setRoom(roomres.data);
-        // })
+
+        // then((res以下returnまでグレーアウト))
         .then((res)=>{
-            const roomId = res.data.id
-            location.href = "/chatpage?roomid="+res.data.id;
+            const room_id = res.data.id
+            location.href = "/chatpage?roomid="+room_id;
             // location.href="/chatpage"
             // console.log("roomid",res.data)
                 // console.log("チャットルームを作りました")
@@ -37,9 +33,12 @@ function AddChatRoom () {
 
     return (
         <SDiv>
-            <SButton id="addchat" onClick={OpenChatRoom}>
-                <SP>新しく相談する</SP>
-            </SButton>
+            <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={OpenChatRoom}>
+                新しく相談する
+            </Button>
+            {/* <SButton id="addchat" onClick={OpenChatRoom}> */}
+                {/* <SP>新しく相談する</SP> */}
+            {/* </SButton> */}
         </SDiv>
     )
 }

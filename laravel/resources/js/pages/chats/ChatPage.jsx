@@ -12,9 +12,9 @@ function ChatPage() {
     return (
         <div>
            <UserProvider>
-            <AddChatRoom
-        //    prop={user}
-            />
+             {/* <AddChatRoom */}
+         {/* prop={user}  */}
+            {/* />  */}
             <Chat 
         //    prop={user}
             />
