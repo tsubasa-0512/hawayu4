@@ -24,4 +24,5 @@ const SImg = styled.img`
 
 const SDiv = styled.div `
   text-align:center;
+
 `

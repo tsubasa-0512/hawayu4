@@ -11,5 +11,5 @@ export const PrimaryButton=(props)=> {
 // 既存のcomponent　にさらにcssを上書きする
 const SButton = styled(DefaultButton)`
     background-color: #FFE3D3;
-
+    margin:auto;
 `

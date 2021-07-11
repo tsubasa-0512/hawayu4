@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import { useHistory} from 'react-router-dom';
 import { PrimaryButton } from '../parts/PrimaryButton';
 
@@ -28,7 +30,7 @@ function Login() {
       <>
 
       {role ==="" ?
-      <div>
+      <SDiv>
             <PrimaryButton onClick={loginUser}>従業員の方はこちら</PrimaryButton>
             <form id="login-form" action="/user/login" method="GET" style={formstyle}>
             <input type="hidden" name="_token" value={ csrf_token } />
@@ -38,7 +40,7 @@ function Login() {
             <form id="login-form-ope" action="/operator/login" method="GET" style={formstyle}>
             <input type="hidden" name="_token" value={ csrf_token } />
             </form>
-      </div>
+      </SDiv>
       :
 
       <div>
@@ -51,6 +53,13 @@ function Login() {
 }
 
 export default Login;
+
+const SDiv = styled.div `
+width:1000px;
+margin:0 auto;
+text-align:center;
+`
+
 
 // const SButton = styled.button`
 //   background-color: #FFE3D3;

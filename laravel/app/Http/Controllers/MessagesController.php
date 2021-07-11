@@ -10,7 +10,7 @@ class MessagesController extends Controller
     public function sendMessages(Request $request, Message $message) {
         $message->message = $request->message;
         $message->sender = $request->role;
-        if($request->role == 'user') {
+        if($request->role = 'user') {
             $message->user_id = $request->id;
         }else {
             $message->operator_id = $request->id;

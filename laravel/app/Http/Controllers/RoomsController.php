@@ -9,6 +9,7 @@ use App\Models\Status;
 use App\Models\Room;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class RoomsController extends Controller
@@ -40,6 +41,7 @@ class RoomsController extends Controller
         $room_id = $request->room_id;
         
         $msg_list = DB::table('messages')
+        ->where('room_id', $room_id)
         ->leftJoin('users', 'users.id', '=', 'messages.user_id')
         ->select('messages.*','users.name')
         ->get();
