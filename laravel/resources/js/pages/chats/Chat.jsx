@@ -66,9 +66,10 @@ function Chat({ope_id}) {
         // })
         .then((res)=>{
            
+            loadRooms();
             // console.log("roomid",room_id)
-            setRoom_id(res.data.id)
-            location.href = "/chatpage?roomid="+res.data.id;
+            // setRoom_id(res.data.id)
+            // location.href = "/chatpage?roomid="+res.data.id;
 
             // console.log("dataid",res.data.id)
             // location.href="/chatpage"
