@@ -13,6 +13,7 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 // ログインユーザの情報取得
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

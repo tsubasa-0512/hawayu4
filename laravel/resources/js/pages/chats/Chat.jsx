@@ -18,6 +18,44 @@ function Chat({ope_id}) {
 
     useEffect(() => {
         loadRooms();
+
+        window.Echo.channel('send-message')
+            .listen('SendMessage',response => {
+                console.log(response.messages['room_id']);
+                // const newMessagesList = [msg_list, response.messages];
+                // setMsg_list(newMessagesList);  
+
+            const clicked_room_id = response.messages['room_id'];
+            let tok = document.querySelector('meta[name="csrf-token"]').content;
+            // alert(el_id.target.id);
+            fetch('/load-msg?room_id='+clicked_room_id,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'X-CSRF-TOKEN':tok,
+                    'Accept':'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(dat => {
+
+                console.log("Json.stringify(dat)",JSON.stringify(dat));
+                let arr = [];
+                for(var x=0;x<dat.length;x++){
+                    // console.log("Json dat[x].message",JSON.stringify(dat[x].message));
+                    arr.push(dat[x]);      
+                }
+                setMsg_list(arr);
+                // console.log("msg_list",msg_list)
+                setRoom_id(clicked_room_id);
+                console.log('url','/load-msg?room_id='+clicked_room_id)
+            
+                // console.log("room_id",newRoomId)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+            });
     },[])
 
     const role = document.querySelector('meta[name="role"]').getAttribute("content");
@@ -183,8 +221,10 @@ function Chat({ope_id}) {
             console.log('from onClickSendChats : '+JSON.stringify(dat));
             //仮の新しいメッセージリスト変数を作り、元のメッセージリストに入力分を追加することで
             //リアルタイムに反映させる
+
             const newMessagesList = [...msg_list, dat];
-            setMsg_list(newMessagesList);
+            setMsg_list(newMessagesList);     
+            
             //送信したら入力欄を空にする
             setInputChat("")
         })
