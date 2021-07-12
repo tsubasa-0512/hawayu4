@@ -29,7 +29,7 @@ function OpeMyPage() {
 
     return (
         <>
-        <SH1>Operator My Page</SH1>
+        {/* <SH1>Operator My Page</SH1> */}
         <SDiv>
             <SBox>
              <dt>名前</dt>
@@ -42,7 +42,7 @@ function OpeMyPage() {
                 height ="150px"
               />
             </SBox>
-    
+      
              <S2Box>
                 {/* <dt>職種</dt>
                 <dd>{operator.occupation}</dd>
@@ -55,18 +55,19 @@ function OpeMyPage() {
                 <dt>登録日</dt>
                 <dd>{operator.created_at}</dd>
              </S2Box>
-
+             </SDiv>
+    
              <Chat 
              ope_id = {operator.id}
              />
-      </SDiv>
+
     
       </>
     )
 }
 
 const SBox = styled.div`
-    background-color:#FED7D7;
+    background-color:#FFE3D3;
     width:20%;
     color:gray;
     box-shadow:2px 2px 4px gray;
@@ -82,7 +83,7 @@ const S2Box = styled.div`
 
 const SH1 = styled.h1`
     text-align:center;
-    color: palevioletred;
+    color: #FFE3D3;
 `
 
 const SImage = styled.img`
@@ -90,9 +91,11 @@ const SImage = styled.img`
 `
 
 const SDiv = styled.div`
+    margin-top:10px;
     display:flex;
     text-align:center;
     justify-content: center;
+    margin-bottom:20px;
     `
 
 export default OpeMyPage

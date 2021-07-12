@@ -27,7 +27,7 @@ class RoomsController extends Controller
     }
 
     // room情報取得
-    public function loooadRoom(Request $request) {
+    public function loadRoom(Request $request) {
         // ユーザーの場合は自身の立てたroomを表示し、保健師の場合は未対応のroomを全て表示
         if($request->role === 'user') {
             $user_id = Auth::user()->id;
@@ -38,9 +38,9 @@ class RoomsController extends Controller
             return Room::where('status_id', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
-        }
-    }
-    // roomに紐づくmessage情報の入手
+            }
+        }    
+        // roomに紐づくmessage情報の入手
     public function loadMessage(Request $request) {
         $room_id = $request->room_id;
         
