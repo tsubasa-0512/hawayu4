@@ -20,6 +20,37 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="nickname">ニックネーム</label>
+                    <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ old('nickname') }}" required autocomplete="name" autofocus placeholder="name">
+                    @error('nickname')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">性別</label></br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="gender1" name="gender" value="男性">
+                        <label class="form-check-label" for="gender1">男性</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="gender2" name="gender" value="女性">
+                        <label class="form-check-label" for="gender2">女性</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="gender3" name="gender" value="無回答">
+                        <label class="form-check-label" for="gender3">無回答</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">生年月日</label>
+                    <input type="date" id="birthday" class="form-control @error('email') is-invalid @enderror" name="birthday" class="form-control">
+                </div>
+
+                <div class="form-group">
                     <label for="email">メールアドレス</label>
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="email">
                     @error('email')
