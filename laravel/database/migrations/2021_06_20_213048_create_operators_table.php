@@ -21,6 +21,7 @@ class CreateOperatorsTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('occupation')->nullable();
+            $table->date('birthday')->nullable();
             $table->string('gender')->nullable();
             $table->text('icon')->nullable();
             $table->rememberToken();

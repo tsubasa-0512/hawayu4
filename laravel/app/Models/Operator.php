@@ -18,7 +18,7 @@ class Operator extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','api_token',
+        'name','nickname','gender','birthday', 'email', 'password','api_token',
     ];
 
     /**
