@@ -20,7 +20,7 @@ class CreateMessagesTable extends Migration
             $table->text('message');
             $table->string('sender');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('operator_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('operator_id')->nullable();
             $table->foreign('operator_id')->references('id')->on('operators');
             $table->unsignedBigInteger('room_id');
