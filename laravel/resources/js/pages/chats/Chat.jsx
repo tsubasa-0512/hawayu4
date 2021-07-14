@@ -201,11 +201,13 @@ function Chat({ope_id}) {
         }else {
             senderId = ope_id;
         }
-      
+
         fetch('/messages?message='+inputChat+
         '&role='+role+
         '&id='+senderId+
         '&room_id='+room_id,
+        // '&nickname='+nickname,
+        // '&nickname='+user.nickname,
         // '&user_id=' + {user_id}+,
         // '&operator_id=' + {operator_id},{
             {
