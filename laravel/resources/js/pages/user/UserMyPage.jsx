@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import axios from 'axios';
+
 import styled from 'styled-components';
 
 import UserInfo from './UserInfo';
@@ -31,6 +33,9 @@ function UserMyPage(props) {
                          });
                 }
 
+        const history = useHistory();
+        const onClickToHawayu =()=>{ history.push('/user/hawayuform')}
+
     return (
         <div>
         <SH1>{user.nickname}さん、こんにちは</SH1>
@@ -47,7 +52,8 @@ function UserMyPage(props) {
         />
 
         <SDiv>
-        <HAwayuButton >ハワユ？</HAwayuButton>
+        <HAwayuButton 
+        onClick={onClickToHawayu}>ハワユ？</HAwayuButton>
         <MoveChatPage />
         </SDiv>
         {/* <AddChatRoom 
