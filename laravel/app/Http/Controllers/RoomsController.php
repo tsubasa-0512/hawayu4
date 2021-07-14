@@ -47,7 +47,7 @@ class RoomsController extends Controller
         $msg_list = DB::table('messages')
         ->where('room_id', $room_id)
         ->leftJoin('users', 'users.id', '=', 'messages.user_id')
-        ->select('messages.*','users.name')
+        ->select('messages.*','users.nickname')
         ->get();
         
         return json_encode($msg_list);

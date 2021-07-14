@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(StatueSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(OperatorSeeder::class);
+        $this->call(QuestionSeeder::class);
+        $this->call(AnswerSeeder::class);
 
         \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

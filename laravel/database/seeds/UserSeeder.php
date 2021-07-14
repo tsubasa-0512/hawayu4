@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'test',
+                'nickname' => 'テスト',
                 'email' => 'test@gmail.com',
                 'password' => Hash::make('password'),
                 'membership_id' => '2',
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 2,
                 'name' => 'test2',
+                'nickname' => 'テスト２',
                 'email' => 'test2@gmail.com',
                 'password' => Hash::make('password'),
                 'membership_id' => '1',

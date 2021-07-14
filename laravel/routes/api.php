@@ -43,3 +43,15 @@ Route::group(['middleware' => ['auth:operator_api']], function () {
     //保健師が対応完了を戻す
     Route::post('/rollback-room', 'RoomsController@rollback');
 });
+
+//hawayu関連
+Route::group(['middleware' => ['auth:api']], function () {
+    // ユーザーのアンケート用紙作成
+    Route::post('/create-inquiry','InquiriesController@createInquiry');
+});
+
+Route::group(['middleware' => ['api']], function () {
+    // ユーザーのアンケート用紙作成
+    Route::get('/show-question','InquiriesController@showQuestionList');
+});
+
