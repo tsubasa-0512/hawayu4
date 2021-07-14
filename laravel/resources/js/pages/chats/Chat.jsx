@@ -201,11 +201,13 @@ function Chat({ope_id}) {
         }else {
             senderId = ope_id;
         }
-      
+
         fetch('/messages?message='+inputChat+
         '&role='+role+
         '&id='+senderId+
         '&room_id='+room_id,
+        // '&nickname='+nickname,
+        // '&nickname='+user.nickname,
         // '&user_id=' + {user_id}+,
         // '&operator_id=' + {operator_id},{
             {
@@ -280,7 +282,7 @@ function Chat({ope_id}) {
                     <div className="col-3">
                         <div className="card">
                             {role==="user" ?
-                            <div className="card-header">{user.name}さんの相談</div>
+                            <div className="card-header">{user.nickname}さんの相談</div>
                             : <div className="card-header">相談ルーム</div>
                         }
                             <div className="card-body">

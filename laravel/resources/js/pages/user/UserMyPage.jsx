@@ -33,11 +33,14 @@ function UserMyPage(props) {
 
     return (
         <div>
-        <SH1>User My Page</SH1>
+        <SH1>{user.nickname}さん、こんにちは</SH1>
 
         <UserInfo 
         user_id = {user.id}
         user_name={user.name}
+        nickname={user.nickname}
+        birthday={user.birthday}
+        gender={user.gender}
         email={user.email}
         company_id={user.company_id}
         created_at={user.created_at}
@@ -57,6 +60,7 @@ function UserMyPage(props) {
 }
 
 const SH1 = styled.h1`
+    font-size:30px;
     text-align:center;
     color: palevioletred;
 `
