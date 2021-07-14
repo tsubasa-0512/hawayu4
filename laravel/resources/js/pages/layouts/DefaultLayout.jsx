@@ -8,7 +8,7 @@ export const DefaultLayout = memo((props) =>{
         <>
         <Header />
          {children}
-        <Footer />
+        {/* <Footer /> */}
         </>
     )
 });
