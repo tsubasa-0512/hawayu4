@@ -27,6 +27,20 @@ function OpeMyPage() {
                          });
                 }
 
+    const birthday = operator.birthday
+    const ageCalculation = ( birthday , nowDate ) => {
+        const birthNumber = birthday.getFullYear() * 10000 
+                                     + (birthday.getMonth() + 1 ) * 100 
+                                     + birthday.getDate();
+        const nowNumber = nowDate.getFullYear() * 10000 
+                                    + (nowDate.getMonth() + 1 ) * 100 
+                                    + nowDate.getDate();
+                 
+        return Math.floor( (nowNumber - birthNumber) / 10000 );
+    }
+                 
+    const age = ageCalculation( new Date(birthday) , new Date() );
+            
     return (
         <>
         {/* <SH1>Operator My Page</SH1> */}
@@ -34,22 +48,21 @@ function OpeMyPage() {
             <SBox>
              <dt>名前</dt>
              <dd>{operator.name}</dd>
-             {/* <dt>ユーザーネーム</dt>
-             <dd>{operator.nickname}</dd> */}
              <SImage
                 src="https://source.unsplash.com/random"
                 width= "150px"
                 height ="150px"
               />
+             <dd>{operator.nickname}</dd>
             </SBox>
       
              <S2Box>
                 {/* <dt>職種</dt>
-                <dd>{operator.occupation}</dd>
+                <dd>{operator.occupation}</dd> */}
                 <dt>性別</dt>
                 <dd>{operator.gender}</dd>
-                <dt>誕生日</dt>
-                <dd>{operator.birthday}</dd> */}
+                <dt>年齢</dt>
+                <dd>{age}歳</dd> 
                 <dt>email</dt>
                 <dd>{operator.email}</dd>
                 <dt>登録日</dt>

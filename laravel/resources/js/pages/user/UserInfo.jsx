@@ -3,16 +3,26 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const UserInfo= ({user_id,user_name,email,company_id,created_at}) =>{
-   
+const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,created_at}) =>{
+    const ageCalculation = ( birthday , nowDate ) => {
+        const birthNumber = birthday.getFullYear() * 10000 
+                                   + (birthday.getMonth() + 1 ) * 100 
+                                   + birthday.getDate();
+        const nowNumber = nowDate.getFullYear() * 10000 
+                                   + (nowDate.getMonth() + 1 ) * 100 
+                                   + nowDate.getDate();
+     
+        return Math.floor( (nowNumber - birthNumber) / 10000 );
+    }
+     
+    const age = ageCalculation( new Date(birthday) , new Date() );
+
     return (
         <>
         <SDiv>
             <SBox>
              <dt>名前</dt>
              <dd>{user_name}</dd>
-             {/* <dt>ユーザーネーム</dt>
-             <dd>{user.nickname}</dd> */}
              <SImage
                 src="https://source.unsplash.com/random"
                 width= "150px"
@@ -20,10 +30,10 @@ const UserInfo= ({user_id,user_name,email,company_id,created_at}) =>{
               />
             </SBox>
              <S2Box>
-                {/* <dt>性別</dt>
-                <dd>{user.gender}</dd>
-                <dt>誕生日</dt>
-                <dd>{user.birthday}</dd> */}
+                <dt>性別</dt>
+                <dd>{gender}</dd>
+                <dt>年齢</dt>
+                <dd>{age}</dd>
                 <dt>email</dt>
                 <dd>{email}</dd>
                 {/* 法人コードと一致するcompany名を取得する予定 */}

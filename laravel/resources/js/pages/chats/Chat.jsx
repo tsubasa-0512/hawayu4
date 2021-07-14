@@ -280,7 +280,7 @@ function Chat({ope_id}) {
                     <div className="col-3">
                         <div className="card">
                             {role==="user" ?
-                            <div className="card-header">{user.name}さんの相談</div>
+                            <div className="card-header">{user.nickname}さんの相談</div>
                             : <div className="card-header">相談ルーム</div>
                         }
                             <div className="card-body">
