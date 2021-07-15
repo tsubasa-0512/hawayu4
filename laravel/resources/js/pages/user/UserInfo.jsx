@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+
 import styled from 'styled-components';
+import {
+    IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
+    Heading,Text,Spacer,
+    Container,Select,Image,Center, Flex
+  } from "@chakra-ui/react"
 
 const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,created_at}) =>{
     const ageCalculation = ( birthday , nowDate ) => {
@@ -19,30 +25,26 @@ const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,cr
 
     return (
         <>
-        <SDiv>
-            <SBox>
-             <dt>名前</dt>
-             <dd>{user_name}</dd>
-             <SImage
-                src="https://source.unsplash.com/random"
-                width= "150px"
-                height ="150px"
-              />
-            </SBox>
-             <S2Box>
-                <dt>性別</dt>
-                <dd>{gender}</dd>
-                <dt>年齢</dt>
-                <dd>{age}</dd>
-                <dt>email</dt>
-                <dd>{email}</dd>
+        <Flex shadow="sm" justifyContent="center" w="70vw" h="30vh" bg="orange.100"
+        mx="auto" mt={"2rem"} mb={"2rem"} rounded="lg" p={4} shadow="lg">
+            <Box>
+                <Image
+                    src="https://source.unsplash.com/random"
+                    // boxSize= "100px"
+                    w={"3rem"} h={"3rem"}
+                    borderRadius="full"
+                 />
+                 <Text>{user_name}</Text>
+            </Box>
+            <Box color="gray.600" fontSize="sm" ml={"2rem"}>
+                <Text>{gender}/{age}歳</Text>
+                <Text>{email}</Text>
                 {/* 法人コードと一致するcompany名を取得する予定 */}
-                <dt>法人コード</dt>
-                <dd>{company_id}</dd>
-                <dt>登録日</dt>
-                <dd>{created_at}</dd>
-             </S2Box>
-      </SDiv>
+                <Text>法人コード:{company_id}</Text>
+                <Text>{created_at}から開始</Text>
+             </Box>
+
+        </Flex>
       </>
     )
 }

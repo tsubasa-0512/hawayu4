@@ -1,7 +1,8 @@
 import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { useHistory} from 'react-router-dom';
+import { useHistory,useLocation} from 'react-router-dom';
+
 import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
     FormControl,FormLabel,
@@ -18,6 +19,7 @@ import { valuesIn } from 'lodash';
 
 const Hawayu = () =>{
     const history = useHistory();
+    const location = useLocation();
     const  [question, setQuestion] = useState([]);
     const  [answerData, setAnswerData] = useState([]);
 
@@ -44,6 +46,9 @@ const Hawayu = () =>{
 
     useEffect(() => {
         onClickShowQuestion()
+        console.log(location.state)
+        const inquiry_Id = location.state
+        console.log(inquiry_Id)
     },[])
 
     const onClickShowQuestion = async() =>{
@@ -51,6 +56,7 @@ const Hawayu = () =>{
                 .then((res)=>{   
                     setQuestion(res.data)
                     console.log(res.data)
+                 
                     }
                         ) 
                 .catch(error => {
@@ -65,14 +71,23 @@ const Hawayu = () =>{
         setAnswerData([...answerData,(JSON.stringify({[e.target.name]:e.target.value}))])
     }
 
-    //送信する関数
-    const onClickSubmit = (e) =>{
-        alert(answerData)
+    //更新部分：送信する関数（回答内容とハワユidを付与）
+    // エンドポイントはdeploy時に本番URLに変える必要あり
+    const onClickSubmit = async() =>{
+       await axios.post('http://localhost/api/answer-inquiry',{
+        answer: answer,
+        inquiry_id: inquiry_id,
+        api_token:api_token
+    }).then(alert("送信しました"))
     }
-
         return(
             <>
-            {/* <button onClick={onClickCreateQuestion}>押す</button> */}
+            <ChakraProvider>
+                <ButtonGroup size="sm" isAttached variant="outline" onClick ={()=>history.goBack()}>
+                    <IconButton aria-label="back" icon={<ArrowBackIcon />} />
+                    <Button mr="-px">戻る</Button>  
+                </ButtonGroup>
+            </ChakraProvider>
         
             <ChakraProvider>
             {question.map((q) =>
