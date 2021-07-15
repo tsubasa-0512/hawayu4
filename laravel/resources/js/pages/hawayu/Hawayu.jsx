@@ -92,7 +92,7 @@ const Hawayu = () =>{
                                         </Box>
                                        {q.question}
                                        <Select placeholder="回答を選ぶ" 
-                                       name={q.id}
+                                       name={"A"+q.id}
                                        onChange={ onChangeSetData }>
                                             {q.answers.map((a)=>
                                             <option value={a.id} key={a.id}>{a.answer}</option> 
