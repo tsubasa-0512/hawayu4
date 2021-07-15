@@ -17,6 +17,11 @@ function UserMyPage(props) {
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
 
+    const csrf_token = 
+    document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content")
+
     useEffect(() => {
         getUser()
     },[])
@@ -34,8 +39,18 @@ function UserMyPage(props) {
                 }
 
         const history = useHistory();
-        const onClickToHawayu =()=>{ history.push('/user/hawayuform')}
+        // const onClickToHawayu =()=>{ history.push('/user/hawayuform')}
 
+        const onClickToHawayu = async() =>{
+            await axios.post("/api/create-inquiry",{api_token},{csrf_token})
+        .then((res)=>{
+            console.log("create",res.data)  
+            history.push('/user/hawayu')
+             })    
+        .catch(error => {
+                     console.log('Error',error.response);
+                         });
+                }
     return (
         <div>
         <SH1>{user.nickname}さん、こんにちは</SH1>

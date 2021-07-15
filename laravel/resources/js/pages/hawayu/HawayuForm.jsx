@@ -16,8 +16,23 @@ import question4 from './question4.png';
 
 const HawayuForm = () =>{
     const history = useHistory();
+    const  [question, setQuestion] = useState([]);
+
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content")
+
+    const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
+        
+
+           
+
     return(
         <>
+
+
         <ButtonGroup size="sm" isAttached variant="outline" onClick ={()=>history.goBack()}>
             <IconButton aria-label="back" icon={<ArrowBackIcon />} />
             <Button mr="-px">戻る</Button>  
@@ -124,6 +139,7 @@ const HawayuForm = () =>{
                         送信する
                 </Button>
          
+        
                 </Container>
                 {/* 合計5点以下＝要相談（相談してみませんか？の文字と、チャットへのリンク（コンテンツ実装できればコンテンツを挟む） */}
                 {/* 合計6点以上＝ありがとうございました！気になることがあればお気軽に相談してくださいねの文字のみ */}
