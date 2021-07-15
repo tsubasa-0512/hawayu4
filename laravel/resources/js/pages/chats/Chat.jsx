@@ -357,7 +357,7 @@ function Chat({ope_id}) {
                                                     />
                                                 </SImage> 
                                                 <SSays>                       
-                                                    <p> {msgs.user_id}さん：{msgs.message}</p>
+                                                    <p> {msgs.nickname}さん：{msgs.message}</p>
                                                  </SSays>
                                             </SChatting>
                                           </SLeftdiv>
