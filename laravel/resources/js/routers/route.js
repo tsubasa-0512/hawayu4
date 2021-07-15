@@ -11,8 +11,7 @@ import { DefaultLayout } from '../pages/layouts/DefaultLayout';
 import { userRoutes } from './userRoutes';
 import { opeRoutes } from './opeRoutes';
 import ChatPage from '../pages/chats/ChatPage';
-import UserProvider from '../pages/user/UserProvider';
-import OpeProvider from '../pages/operators/OpeProvider';
+
 
   function App() {
     return (

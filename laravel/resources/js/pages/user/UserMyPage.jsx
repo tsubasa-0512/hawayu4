@@ -3,6 +3,12 @@ import {useHistory} from "react-router-dom";
 import axios from 'axios';
 
 import styled from 'styled-components';
+import {
+    IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
+    Heading,
+    Container,Select,Image,Center
+  } from "@chakra-ui/react"
+import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'
 
 import UserInfo from './UserInfo';
 import MoveChatPage from '../chats/MoveChatPage';
@@ -11,6 +17,8 @@ import { DefaultButton } from '../../parts/DefaultButton';
 function UserMyPage(props) {
 
     const [user, setUser] = useState([]);
+    const [createData, setCreateData] = useState([]);
+
 
     const api_token=
     document
@@ -41,19 +49,23 @@ function UserMyPage(props) {
         const history = useHistory();
         // const onClickToHawayu =()=>{ history.push('/user/hawayuform')}
 
+        //Hawayuを作成し、フォーム送信ページへ
         const onClickToHawayu = async() =>{
             await axios.post("/api/create-inquiry",{api_token},{csrf_token})
         .then((res)=>{
             console.log("create",res.data)  
-            history.push('/user/hawayu')
+            // setCreateData(res.data)
+            const createId = res.data.id
+            history.push("/user/hawayu",{"inquiry_id":createId})
              })    
         .catch(error => {
                      console.log('Error',error.response);
                          });
                 }
     return (
-        <div>
-        <SH1>{user.nickname}さん、こんにちは</SH1>
+        <ChakraProvider>
+
+        {/* <Heading as="h1" size="sm" color="gray">{user.nickname}さん、ハワユ?</Heading> */}
 
         <UserInfo 
         user_id = {user.id}
@@ -76,15 +88,16 @@ function UserMyPage(props) {
         /> */}
         {/* <ChatPage 
         user_name={user.name}/> */}
-      </div>
+    
+      </ChakraProvider>
     )
 }
 
-const SH1 = styled.h1`
-    font-size:30px;
-    text-align:center;
-    color: palevioletred;
-`
+// const SH1 = styled.h1`
+//     font-size:30px;
+//     text-align:center;
+//     color: palevioletred;
+// `
 const SDiv = styled.div`
     display:flex;
     text-align:center;
