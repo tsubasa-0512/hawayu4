@@ -356,42 +356,63 @@ function Chat({ope_id}) {
                                     {msg_list.map((msgs) =>
                                     <li className="list-group-item" id={msgs.id} key={msgs.id}>
                                        
-                                        {msgs.sender === "operator" 
-                                          //左（オペレーター）
-                                        ? <SLeftdiv>
+                                        {msgs.sender === role ?
+                                          //右（自分の送信）
+
+                                          <SRightdiv>
+                                            
+                                            <SRImage>
+                                            {role ==="user" ?
+                                              <img
+                                                    src="https://source.unsplash.com/random"
+                                                    width= "150px"
+                                                    height ="150px"
+                                                    />
+                                                :
+                                            <img
+                                                    src={team}
+                                                    width= "150px"
+                                                    height ="150px"
+                                                    />
+                                                }
+                                            </SRImage> 
+                                            
+                                        
+                                            <SRsays>
+                                           
+                                                    <p> {msgs.message}</p>
+                                                     {/* : <p> ハワユチーム：{msgs.message}</p>} */}
+                                          
+                                            </SRsays>
+                                          </SRightdiv> 
+                                         
+                                          //左（相手の送信）
+                                        : 
+                                        <SLeftdiv>
                                             <SChatting>
                                                 <SImage>
+                                                {role === "user" ?
                                                 <img
                                                     src={team}
                                                     width= "150px"
                                                     height ="150px"
                                                     />
-                                                </SImage> 
-                                                <SSays>                       
-                                                <p>ハワユチーム：{msgs.message}</p>
-                                                 </SSays>
-                                            </SChatting>
-                                          </SLeftdiv>
-                                          //右（ユーザー）
-                                        : <SRightdiv>
-                                            <SRImage>
-                                    
-
-<img
+                                                    :
+                                                    <img
                                                     src="https://source.unsplash.com/random"
                                                     width= "150px"
                                                     height ="150px"
                                                     />
-                                            </SRImage> 
-                                            <SRsays>
-                                            {role==="operator"
+                                            }
+                                                </SImage> 
+                                                <SSays>                       
+                                                {role==="operator"
                                                     ? <p> {msgs.nickname}さん：{msgs.message}</p>
-                                                    : <p> {msgs.message}</p>}
-                                          
-                                            </SRsays>
-                                          </SRightdiv> }
-            
-
+                                                    : <p> ハワユチーム：{msgs.message}</p>}
+                                                 </SSays>
+                                            </SChatting>
+                                          </SLeftdiv>
+                                        }
                                     </li>)}
                                 </ul>
                                 </SChatdiv>
