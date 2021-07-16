@@ -6,20 +6,17 @@ import styled from 'styled-components';
 import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
     Heading,
-    Container,Select,Image,Center
+    Container,Select,Image,Center,Grid, GridItem ,Text,
   } from "@chakra-ui/react"
-import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'
 
-import UserInfo from './UserInfo';
 import MoveChatPage from '../chats/MoveChatPage';
 import { DefaultButton } from '../../parts/DefaultButton';
+import Contents from '../contents/Contents';
 
 function UserMyPage(props) {
 
     const [user, setUser] = useState([]);
     const [createData, setCreateData] = useState([]);
-
-
     const api_token=
     document
     .querySelector('meta[name="api-token"]')
@@ -66,8 +63,19 @@ function UserMyPage(props) {
         <ChakraProvider>
 
         {/* <Heading as="h1" size="sm" color="gray">{user.nickname}さん、ハワユ?</Heading> */}
+        <Box>
 
-        <UserInfo 
+        <Center>
+            <Button  w="90vw" h="20vh" bg="#FFE3D3"
+        mx="auto" mt={"2rem"} mb={"1rem"} rounded="lg" p={4} shadow="lg"
+        textAlign="center"　display="block" color="gray"
+         onClick={onClickToHawayu}>
+            {user.nickname}さん、ハワユ？
+            <br />
+            <Text fontSize="xs">今の自分を気軽に診断してみよう</Text>
+            </Button>
+        </Center>
+        {/* <UserInfo 
         user_id = {user.id}
         user_name={user.name}
         nickname={user.nickname}
@@ -76,13 +84,24 @@ function UserMyPage(props) {
         email={user.email}
         company_id={user.company_id}
         created_at={user.created_at}
-        />
+        /> */}
+        </Box>
+        <Box display="flex" justifyContent="center" 
+        textAlign="center" mb={"1rem"}>
+            <Button  
+            bg="orange.100" shadow="lg" color="gray"
+            w="30vw" h="20vw"
+            mr={"1rem"}
+                >登録内容
+            </Button>
+            <MoveChatPage />
 
-        <SDiv>
-        <HAwayuButton 
-        onClick={onClickToHawayu}>ハワユ？</HAwayuButton>
-        <MoveChatPage />
-        </SDiv>
+        </Box>
+
+        <Box textAlign="center" mb={"1rem"} >
+        <Contents />
+        </Box>
+
         {/* <AddChatRoom 
         user_id = {user.id}
         /> */}

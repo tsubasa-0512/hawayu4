@@ -10,8 +10,8 @@ function Footer() {
 }
 
 const SFooter = styled.footer`
-    background-color:#fabb7d;
-    color:#fff;
+
+    color:gray;
     text-align:center;
     padding:8px 0;
     position:fixed;

@@ -15,7 +15,8 @@ function Header(){
 }
 
 const SHeader = styled.header`
-    background-color:#fabb7d;
+    background-color:#white;
+    box-shadow:2px 2px 4px gray;
     color:#fff;
     text-align:center;
     padding:8px 0;
