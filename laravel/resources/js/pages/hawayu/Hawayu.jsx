@@ -25,6 +25,8 @@ const Hawayu = () =>{
 
     const pictures = [question1,question2,question3,question4]
 
+    const inquiry_Id = location.state.inquiry_id
+
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content")
@@ -46,9 +48,6 @@ const Hawayu = () =>{
 
     useEffect(() => {
         onClickShowQuestion()
-        console.log(location.state)
-        const inquiry_Id = location.state
-        console.log(inquiry_Id)
     },[])
 
     const onClickShowQuestion = async() =>{
@@ -68,17 +67,19 @@ const Hawayu = () =>{
     const onChangeSetData = (e) =>{
         e.preventDefault();
         //questionID：answerID
-        setAnswerData([...answerData,(JSON.stringify({[e.target.name]:e.target.value}))])
+        setAnswerData([...answerData,(JSON.stringify(e.target.value))])
     }
 
     //更新部分：送信する関数（回答内容とハワユidを付与）
     // エンドポイントはdeploy時に本番URLに変える必要あり
     const onClickSubmit = async() =>{
        await axios.post('http://localhost/api/answer-inquiry',{
-        answer: answer,
-        inquiry_id: inquiry_id,
+        answer: answerData,
+        inquiry_id: inquiry_Id,
         api_token:api_token
-    }).then(alert("送信しました"))
+    }).then((res)=>{
+        console.log(res.data);
+    })
     }
         return(
             <>
