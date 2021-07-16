@@ -4,6 +4,13 @@ import styled from "styled-components"
 import { MenuButton } from '../../parts/MenuButton';
 import { UserContext } from '../user/UserProvider';
 
+import {
+    IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
+    Heading,
+    Container,Select,Image,Center,Text
+  } from "@chakra-ui/react"
+import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'
+
 function MoveChatPage(){
     const history = useHistory();
     const {user, setUser} = useContext(UserContext)
@@ -14,9 +21,10 @@ function MoveChatPage(){
         history.push("/chatpage")
     }
     return(
-        <MenuButton onClick={onClickMoveChat} >
-            <p>チャットページへ</p>
-        </MenuButton>
+        <Button onClick={onClickMoveChat} bg="blue.100" shadow="lg" w="50vw" h="20vw"
+        color="gray" leftIcon={<ArrowRightIcon />} >
+            <Text as="u">相談する</Text>
+        </Button>
 
     )
 }

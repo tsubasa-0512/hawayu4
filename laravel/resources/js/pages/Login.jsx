@@ -1,7 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
-
 import { useHistory} from 'react-router-dom';
+
+import styled from 'styled-components';
+import {
+  IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
+  Heading,Text,Spacer,
+  Container,Select,Image,Center, Flex
+} from "@chakra-ui/react"
+
 import { PrimaryButton } from '../parts/PrimaryButton';
 
 function Login() {
@@ -28,26 +34,31 @@ function Login() {
 
     return (
       <>
-
+     <ChakraProvider>
       {role ==="" ?
-      <SDiv>
-            <PrimaryButton onClick={loginUser}>従業員の方はこちら</PrimaryButton>
-            <form id="login-form" action="/user/login" method="GET" style={formstyle}>
-            <input type="hidden" name="_token" value={ csrf_token } />
+      <Box mx="auto" >
+            <Box>
+              <Button onClick={loginUser} mb="10px" bg="#FFE3D3" size="sm" shadow="lg" color="gray">従業員の方はこちら</Button>
+              <form id="login-form" action="/user/login" method="GET" style={formstyle}>
+              <input type="hidden" name="_token" value={ csrf_token } />
             </form>
+            </Box>
 
-            <PrimaryButton onClick={loginOpe}>産業保健師・看護師の方はこちら</PrimaryButton>
-            <form id="login-form-ope" action="/operator/login" method="GET" style={formstyle}>
-            <input type="hidden" name="_token" value={ csrf_token } />
-            </form>
-      </SDiv>
+            <Box>
+              <Button onClick={loginOpe} mb="10px" bg="#FFE3D3" size="sm" shadow="lg" color="gray">産業保健師・看護師の方はこちら</Button>
+              <form id="login-form-ope" action="/operator/login" method="GET" style={formstyle}>
+              <input type="hidden" name="_token" value={ csrf_token } />
+              </form>
+            </Box>
+      </Box>
       :
 
-      <div>
+      <Box>
          ログインしています
-         <button onClick ={()=>history.goBack()}>戻る</button>
-      </div>
+         <Button onClick ={()=>history.goBack()}>戻る</Button>
+      </Box>
     }
+    </ChakraProvider>
       </>
     );
 }

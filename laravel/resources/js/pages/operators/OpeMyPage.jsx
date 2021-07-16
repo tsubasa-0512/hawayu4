@@ -46,8 +46,7 @@ function OpeMyPage() {
         {/* <SH1>Operator My Page</SH1> */}
         <SDiv>
             <SBox>
-             <dt>名前</dt>
-             <dd>{operator.name}</dd>
+             <dd>{operator.name}さん</dd>
              <SImage
                 src="https://source.unsplash.com/random"
                 width= "150px"

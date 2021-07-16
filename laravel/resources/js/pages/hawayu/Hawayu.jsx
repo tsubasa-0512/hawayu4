@@ -5,7 +5,7 @@ import { useHistory,useLocation} from 'react-router-dom';
 
 import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
-    FormControl,FormLabel,
+    FormControl,FormLabel,Text,
     Container,Select,Image,Center
   } from "@chakra-ui/react"
 import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'

@@ -1,8 +1,13 @@
 import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
+
 import styled from 'styled-components';
-import { Button,Box,ChakraProvider} from "@chakra-ui/react"
-import { AddIcon } from '@chakra-ui/icons'
+import {
+    IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
+    Heading,
+    Container,Select,Image,Center,Grid, GridItem ,Text,
+  } from "@chakra-ui/react"
+import { AddIcon ,ArrowRightIcon} from '@chakra-ui/icons'
 
 import { UserContext } from '../user/UserProvider';
 import { PrimaryButton } from '../../parts/PrimaryButton';
@@ -252,6 +257,7 @@ function Chat({ope_id}) {
        await axios.post (`http://localhost/api/join-room?room_id=${room_id}`,{api_token},{csrf_token})
     .then((response)=>{
         console.log(response)
+       
         // location.href = "/chatpage?roomid="+room_id;
         // alert("joinしました")
             }).catch(error => {
@@ -261,7 +267,9 @@ function Chat({ope_id}) {
 
         //対応中ルーム一覧
         const [wipRoom,setWipRoom] = useState([]);
-        
+        //対応中のstatusかどうか（初期値はfalse、対応ボタンが押されたらtrueに）
+       
+
         //保健師が対応中のルーム一覧を取得
         const onClickWip = async()=>{
         const operator_id = ope_id
@@ -277,6 +285,7 @@ function Chat({ope_id}) {
 
         return (
             <>
+             <ChakraProvider>
             <div className="container">               
                 <div className="row no-gutters">
                     <div className="col-3">
@@ -289,12 +298,11 @@ function Chat({ope_id}) {
                                 <ul id="user_list" className="user_list list-group">
                                 {role==="operator"&&
                                 <div>
-                                <ChakraProvider>
+                               
                                 <Button leftIcon={<AddIcon />} 
                                     bg="#FFE3D3" size="sm" onClick={onClickWip}>
                                        対応中の相談
                                 </Button>
-                                </ChakraProvider>
                                 {wipRoom.map((number) =>
                                     <a href="#"
                                     key={number.id}>
@@ -340,41 +348,49 @@ function Chat({ope_id}) {
                         <div className="card">
                             <div className="card-body">
                                 {/* オペレーター時のみ表示 */}
-                            {role==="operator" &&( <PrimaryButton onClick={onClickJoinRoom}>参加する</PrimaryButton>)}
+                            {role==="operator" &&   ( <Button bg="#FFE3D3" size="sm"
+                            leftIcon={<ArrowRightIcon />} 
+                            onClick={onClickJoinRoom}>対応する</Button>)}
                                 <SChatdiv>
                                 <ul id="chat_list" className="chat_list list-group">
                                     {msg_list.map((msgs) =>
                                     <li className="list-group-item" id={msgs.id} key={msgs.id}>
-                                        {msgs.sender === "user" 
-                                          //左（ユーザー）
+                                       
+                                        {msgs.sender === "operator" 
+                                          //左（オペレーター）
                                         ? <SLeftdiv>
                                             <SChatting>
                                                 <SImage>
-                                                    <img
-                                                    src="https://source.unsplash.com/random"
-                                                    width= "150px"
-                                                    height ="150px"
-                                                    />
-                                                </SImage> 
-                                                <SSays>                       
-                                                    <p> {msgs.nickname}さん：{msgs.message}</p>
-                                                 </SSays>
-                                            </SChatting>
-                                          </SLeftdiv>
-                                          //右（産業保健師・看護師）
-                                        : <SRightdiv>
-                                            <SRImage>
                                                 <img
                                                     src={team}
                                                     width= "150px"
                                                     height ="150px"
                                                     />
+                                                </SImage> 
+                                                <SSays>                       
+                                                <p>ハワユチーム：{msgs.message}</p>
+                                                 </SSays>
+                                            </SChatting>
+                                          </SLeftdiv>
+                                          //右（ユーザー）
+                                        : <SRightdiv>
+                                            <SRImage>
+                                    
+
+<img
+                                                    src="https://source.unsplash.com/random"
+                                                    width= "150px"
+                                                    height ="150px"
+                                                    />
                                             </SRImage> 
                                             <SRsays>
-                                            <p>ハワユチーム：{msgs.message}</p>
+                                            {role==="operator"
+                                                    ? <p> {msgs.nickname}さん：{msgs.message}</p>
+                                                    : <p> {msgs.message}</p>}
+                                          
                                             </SRsays>
                                           </SRightdiv> }
-                                           
+            
 
                                     </li>)}
                                 </ul>
@@ -397,6 +413,8 @@ function Chat({ope_id}) {
                     )}
                 </div>
             </div>
+            </ChakraProvider>
+
             </>
         );
     }

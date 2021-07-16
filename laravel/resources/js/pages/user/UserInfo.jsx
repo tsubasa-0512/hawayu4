@@ -25,8 +25,8 @@ const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,cr
 
     return (
         <>
-        <Flex shadow="sm" justifyContent="center" w="70vw" h="30vh" bg="orange.100"
-        mx="auto" mt={"2rem"} mb={"2rem"} rounded="lg" p={4} shadow="lg">
+        <Flex shadow="sm" justifyContent="center" w="70vw" h="20vh" bg="orange.100"
+        mx="auto" mt={"2rem"} mb={"1rem"} rounded="lg" p={4} shadow="lg">
             <Box>
                 <Image
                     src="https://source.unsplash.com/random"
@@ -37,11 +37,10 @@ const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,cr
                  <Text>{user_name}</Text>
             </Box>
             <Box color="gray.600" fontSize="sm" ml={"2rem"}>
-                <Text>{gender}/{age}歳</Text>
-                <Text>{email}</Text>
+                <Text>{gender} {age}歳</Text>
                 {/* 法人コードと一致するcompany名を取得する予定 */}
                 <Text>法人コード:{company_id}</Text>
-                <Text>{created_at}から開始</Text>
+                <Text>登録日：{created_at}</Text>
              </Box>
 
         </Flex>
