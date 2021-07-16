@@ -49,11 +49,13 @@ Route::group(['middleware' => ['auth:api']], function () {
     // ユーザーのアンケート用紙作成
     Route::post('/create-inquiry','InquiriesController@createInquiry');
     // ユーザーのアンケート回答・保存
+    Route::post('/answer-inquiry','InquiriesController@answerInquiry');
+    // ユーザーの過去のアンケート表示
+    Route::get('/past-inquiry','InquiriesController@pastInquiry');
 });
 
 Route::group(['middleware' => ['api']], function () {
     // ユーザーのアンケート用紙作成
     Route::get('/show-question','InquiriesController@showQuestionList');
-    Route::post('/answer-inquiry','InquiriesController@answerInquiry');
 });
 

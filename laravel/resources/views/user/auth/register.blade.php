@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-warning">
+                    <button type="submit" class="btn btn-block " style="background-color:#FFE3D3;">
                         会員登録
                     </button>
                 </div>

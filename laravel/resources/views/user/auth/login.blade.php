@@ -1,9 +1,10 @@
 @extends('layouts.user.app')
 
 @section('content')
-<div class="container">
-    <div class="card" style="width: 500px">
-        <div class="card-body">
+<div class="container mx-auto">
+    <span>産業師・保健師の方は<a href="{{ route('operator.login') }}">こちら</a></span>
+    <div class="card px-0" style="width: 100%">
+        <div class="card-body px-0">
             <div class="font-weight-bold text-center border-bottom pb-3" style="font-size: 24px">ログイン</div>
 
             <form method="POST" action="{{ route('user.login') }}" class="p-5">
@@ -42,7 +43,7 @@
                 </div>
 
                 <div class="form-group mb-0">
-                    <button type="submit" class="btn btn-block btn-warning">
+                    <button type="submit" class="btn btn-block" style="background-color:#FFE3D3;">
                         ログイン
                     </button>
                 </div>

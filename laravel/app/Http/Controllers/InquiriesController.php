@@ -43,11 +43,21 @@ class InquiriesController extends Controller
                 'answer_id' => $answerinfo->id
             ]);
 
-
             $score += $answerinfo->allocation;
         }
 
-        return $score;
+        $inquiry = Inquiry::where('id', $inquiry_id)->first();
+        $inquiry->score = $score;
+        $inquiry->save();
+        
 
+        return $inquiry;
+
+    }
+
+    public function pastInquiry(Request $request) {
+        $user_id =  $request->user()->id;
+        $past_inquiry = Inquiry::with('results')->where('user_id', $user_id)->get();
+        return $past_inquiry;
     }
 }   
