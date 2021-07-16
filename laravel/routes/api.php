@@ -48,10 +48,12 @@ Route::group(['middleware' => ['auth:operator_api']], function () {
 Route::group(['middleware' => ['auth:api']], function () {
     // ユーザーのアンケート用紙作成
     Route::post('/create-inquiry','InquiriesController@createInquiry');
+    // ユーザーのアンケート回答・保存
 });
 
 Route::group(['middleware' => ['api']], function () {
     // ユーザーのアンケート用紙作成
     Route::get('/show-question','InquiriesController@showQuestionList');
+    Route::post('/answer-inquiry','InquiriesController@answerInquiry');
 });
 

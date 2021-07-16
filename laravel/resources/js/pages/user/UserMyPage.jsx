@@ -57,6 +57,7 @@ function UserMyPage(props) {
             // setCreateData(res.data)
             const createId = res.data.id
             history.push("/user/hawayu",{"inquiry_id":createId})
+            history.push
              })    
         .catch(error => {
                      console.log('Error',error.response);
