@@ -43,6 +43,8 @@ class RoomsController extends Controller
         // roomに紐づくmessage情報の入手
     public function loadMessage(Request $request) {
         $room_id = $request->room_id;
+
+        $room = Room::where('id', $room_id)->first();
         
         $msg_list = DB::table('messages')
         ->where('room_id', $room_id)
@@ -50,7 +52,7 @@ class RoomsController extends Controller
         ->select('messages.*','users.nickname')
         ->get();
         
-        return json_encode($msg_list);
+        return [$room, $msg_list];
     }
 
     //未対応ルーム情報取得
