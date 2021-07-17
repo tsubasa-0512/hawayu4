@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Operator', 'rooms','user_id', 'operator_id')->withTimestamps();
     }
+
+    public function conditions()
+    {
+        return $this->hasMany('App\Models\Condition');
+    }
 }

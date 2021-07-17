@@ -101,4 +101,12 @@ class RoomsController extends Controller
     
         return $room;        
     }
+
+    //対応済ルーム情報取得
+    public function done(Request $request, Room $room) {
+        $operator = $request->user();
+        return $room->where('status_id', 3)
+        ->where('operator_id', $operator->id)
+        ->get();
+    }
 }

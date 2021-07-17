@@ -19,9 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 // ログイン保健師の情報取得
 Route::middleware('auth:operator_api')->get('/operator', function (Request $request) {
     return $request->user();
+});
+
+
+// condition情報関連
+Route::group(['middleware' => ['auth:api']], function () {
+    // conditon情報を登録
+    Route::post('/post-condition','ConditionsController@postCondition');
+    // conditon情報を表示
+    Route::get('/get-condition','ConditionsController@getConditions');
+    // conditon情報を編集
+    Route::post('/update-condition','ConditionsController@updateCondition');
 });
 
 
@@ -42,6 +54,8 @@ Route::group(['middleware' => ['auth:operator_api']], function () {
     Route::post('/close-room', 'RoomsController@closed');
     //保健師が対応完了を戻す
     Route::post('/rollback-room', 'RoomsController@rollback');
+    // 対応済ルーム情報取得
+    Route::get('/done', 'RoomsController@done');
 });
 
 //hawayu関連
