@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useHistory,useLocation} from 'react-router-dom';
@@ -6,7 +6,9 @@ import { useHistory,useLocation} from 'react-router-dom';
 import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
     FormControl,FormLabel,Text,
-    Container,Select,Image,Center
+    Container,Select,Image,Center,
+    Modal,ModalOverlay,ModalContent,
+    ModalHeader,ModalFooter,ModalBody,ModalCloseButton,useDisclosure
   } from "@chakra-ui/react"
 import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'
 
@@ -14,14 +16,22 @@ import question1 from './question1.png';
 import question2 from './question2.png';
 import question3 from './question3.png';
 import question4 from './question4.png';
-import { valuesIn } from 'lodash';
+import MoveChatPage from '../chats/MoveChatPage';
 
 
 const Hawayu = () =>{
     const history = useHistory();
     const location = useLocation();
+    //質問と選択肢の内容（dbから）
     const  [question, setQuestion] = useState([]);
+    //回答内容
     const  [answerData, setAnswerData] = useState([]);
+    //回答結果の内容（スコアなど）
+    const  [scoreData, setScoreData] = useState([]);
+    //モーダル用
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const finalRef = React.useRef()
+    const [show, setShow] = useState(false)
 
     const pictures = [question1,question2,question3,question4]
 
@@ -79,8 +89,18 @@ const Hawayu = () =>{
         api_token:api_token
     }).then((res)=>{
         console.log(res.data);
+        setScoreData(res.data)
+    }).then(()=>{
+        console.log(scoreData)
+        setShow(true)
     })
+    
     }
+    //マイページへ戻る
+    const onClickToMyPage = ()=>{
+        history.push('/user/home')
+    }
+
         return(
             <>
             <ChakraProvider>
@@ -127,7 +147,41 @@ const Hawayu = () =>{
                                              </Button>
                                         </Center>
 
-                                        
+            {/* 結果表示用モーダル */}
+    
+         <Modal finalFocusRef={finalRef}
+          isOpen={show} 
+          onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>ハワユ？</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          {scoreData.score && 
+               <ul >
+                <li>{scoreData.updated_at}</li>
+                <li>{scoreData.score}点</li>
+                <li>{
+                    scoreData.score >= 5 ?
+                    "良い調子ですね！"
+                    :
+                     <MoveChatPage />
+                    }</li>
+               </ul>
+            }
+          </ModalBody>
+
+          <ModalFooter>
+            <Button bg="gray" mr={3} onClick={onClose}>
+              閉じる
+            </Button>
+            <Button bg="#FFE3D3" mr={3} onClick={onClickToMyPage}>
+              マイページへ
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+                               
                  </ChakraProvider>
 
             </>
