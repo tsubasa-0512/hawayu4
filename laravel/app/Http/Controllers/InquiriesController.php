@@ -55,9 +55,13 @@ class InquiriesController extends Controller
 
     }
 
+    // 指定した月のhawayuデータを返却
     public function pastInquiry(Request $request) {
-        $user_id =  $request->user()->id;
-        $past_inquiry = Inquiry::with('results')->where('user_id', $user_id)->get();
+        $user_id =  $request->user()->id;   
+        $month = $request->month;
+        $past_inquiry = Inquiry::with('results.answer')->where('user_id', $user_id)
+                        ->whereMonth('updated_at', $month)
+                        ->get();
         return $past_inquiry;
     }
 }   
