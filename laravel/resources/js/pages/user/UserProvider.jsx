@@ -1,5 +1,6 @@
 import React, {createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import OpeMyPage from '../operators/OpeMyPage';
 
 export const UserContext = createContext({})
 
@@ -11,6 +12,10 @@ function UserProvider(props) {
     document
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
+
+    const role = document
+    .querySelector('meta[name="role"]')
+    .getAttribute("content")
 
     useEffect(() => {
         getUser()
@@ -26,6 +31,7 @@ function UserProvider(props) {
                 }).catch(error => {
                      console.log('Error',error.response);
                          });
+
                 }
 
     return (

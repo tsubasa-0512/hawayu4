@@ -6,6 +6,12 @@ import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
     Heading,
     Container,Select,Image,Center,Grid, GridItem ,Text,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,useDisclosure,AlertDialogCloseButton
   } from "@chakra-ui/react"
 import { AddIcon ,ArrowRightIcon} from '@chakra-ui/icons'
 
@@ -18,8 +24,14 @@ function Chat({ope_id}) {
     const [msg_list, setMsg_list] = useState([]);
     //チャットルーム
     const [room_list, setRoom_list]= useState([]);
+    //チャットルームごとのルーム情報
+    const [room_info, setRoom_info]= useState([]);
     //ルームID
     const [room_id, setRoom_id] = useState("");
+    //対応中ルーム一覧
+     const [wipRoom,setWipRoom] = useState([]);
+    //対応完了ルーム一覧
+    const[doneRoom,setDoneRoom] = useState([]);
 
     useEffect(() => {
         loadRooms();
@@ -27,8 +39,7 @@ function Chat({ope_id}) {
         window.Echo.channel('send-message')
             .listen('SendMessage',response => {
                 console.log(response.messages['room_id']);
-                // const newMessagesList = [msg_list, response.messages];
-                // setMsg_list(newMessagesList);  
+
 
             const clicked_room_id = response.messages['room_id'];
             let tok = document.querySelector('meta[name="csrf-token"]').content;
@@ -50,7 +61,9 @@ function Chat({ope_id}) {
                     // console.log("Json dat[x].message",JSON.stringify(dat[x].message));
                     arr.push(dat[x]);      
                 }
-                setMsg_list(arr);
+                setRoom_info(arr[0]);
+            
+                setMsg_list(arr[1]);
                 // console.log("msg_list",msg_list)
                 setRoom_id(clicked_room_id);
                 console.log('url','/load-msg?room_id='+clicked_room_id)
@@ -150,8 +163,12 @@ function Chat({ope_id}) {
                 // console.log("Json dat[x].message",JSON.stringify(dat[x].message));
                 arr.push(dat[x]);      
             }
-            setMsg_list(arr);
-            // console.log("msg_list",msg_list)
+            setRoom_info(arr[0]);
+            setMsg_list(arr[1]);
+            console.log(arr[0])
+            // const newRoomInfoList = [...room_info, arr[0]]
+            // setRoom_info(newRoomInfoList)
+  
             setRoom_id(clicked_room_id);
             console.log('url','/load-msg?room_id='+clicked_room_id)
           
@@ -229,8 +246,10 @@ function Chat({ope_id}) {
             //仮の新しいメッセージリスト変数を作り、元のメッセージリストに入力分を追加することで
             //リアルタイムに反映させる
 
-            const newMessagesList = [...msg_list, dat];
-            setMsg_list(newMessagesList);     
+            const newMessagesList = [...msg_list, dat]
+            // const newRoomInfo = [...room_info,dat]
+            setMsg_list(newMessagesList);    
+            // setRoom_info(newRoomInfo)
             
             //送信したら入力欄を空にする
             setInputChat("")
@@ -241,6 +260,10 @@ function Chat({ope_id}) {
     }
 
     //保健師がルームに入る
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = React.useRef()
+
+    
     const onClickJoinRoom =async () =>{
        const operator_id = ope_id
        console.log("operatorid",operator_id)
@@ -256,19 +279,15 @@ function Chat({ope_id}) {
     // })
        await axios.post (`http://localhost/api/join-room?room_id=${room_id}`,{api_token},{csrf_token})
     .then((response)=>{
-        console.log(response)
-       
+        console.log("joinres",response)
         // location.href = "/chatpage?roomid="+room_id;
-        // alert("joinしました")
+        alert("担当者になりました。対応中の相談一覧は、左の＋ボタンを押して下さい")
             }).catch(error => {
                  console.log('Error',error.response);
                      });
             }
 
-        //対応中ルーム一覧
-        const [wipRoom,setWipRoom] = useState([]);
-        //対応中のstatusかどうか（初期値はfalse、対応ボタンが押されたらtrueに）
-       
+
 
         //保健師が対応中のルーム一覧を取得
         const onClickWip = async()=>{
@@ -282,26 +301,57 @@ function Chat({ope_id}) {
                 });
         }
 
+        //保健師が対応中のルームを完了にする
+        const onClickDoneRoom = async() =>{
+            const operator_id = room_info.operator_id
+            const room_id = room_info.id
+            await axios.post(`http://localhost/api/close-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
+        .then((response)=>{
+            console.log("closeroom",response.data)
+            const newDoneRoom = [...doneRoom,response.data]
+            setDoneRoom(newDoneRoom)
+          
+        }).then( 
+             alert("「対応完了」にしました！ご対応をありがとうございました")
+        ).catch(error => {
+            console.log('Error',error.response);
+                });
+        }
+
+        //保健師が対応完了→未完了に戻す
+        const onClickUndone = async() =>{
+            const operator_id = room_info.operator_id
+            const room_id = room_info.id
+            await axios.post(`http://localhost/api/rollback-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
+            .then((response)=>{
+                console.log("undoneroom",response.data)
+                setDoneRoom(response.data)
+            }).then( 
+                 alert("「対応中」に戻しました！ご対応をお願いいたします")
+            ).catch(error => {
+                console.log('Error',error.response);
+                    });
+            }
 
         return (
             <>
-             <ChakraProvider>
+            <ChakraProvider>
             <div className="container">               
                 <div className="row no-gutters">
                     <div className="col-3">
                         <div className="card">
-                            {role==="user" ?
-                            <div className="card-header">{user.nickname}さんの相談</div>
-                            : <div className="card-header">相談ルーム</div>
-                        }
-                            <div className="card-body">
+                             <div className="card-header">一覧</div>
+                        
+                              <div className="card-body">
+                           
+                            
                                 <ul id="user_list" className="user_list list-group">
                                 {role==="operator"&&
                                 <div>
                                
                                 <Button leftIcon={<AddIcon />} 
-                                    bg="#FFE3D3" size="sm" onClick={onClickWip}>
-                                       対応中の相談
+                                    bg="#FFE3D3" size="sm" ml="0" onClick={onClickWip}>
+                                       対応中
                                 </Button>
                                 {wipRoom.map((number) =>
                                     <a href="#"
@@ -311,20 +361,20 @@ function Chat({ope_id}) {
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" 
                                     style={{ backgroundColor: '#abedd8' }}>
-                                        部屋{number.id}
+                                        {number.id}
                                         </li>
                                     </a>
                                     )}
                                         
                                 </div>
                                 }
-                                {role==="user" && <ChakraProvider>
+                                {role==="user" && 
                                     <Button leftIcon={<AddIcon />} 
                                     bg="#FFE3D3" size="sm" onClick={onClickOpenChatRoom}>
                                         新しく相談する
                                     </Button>
-                                </ChakraProvider>}
-                                {role==="operator" && <p>未対応の相談</p>}
+                                }
+                                {/* {role==="operator" && <Text>未対応</Text>} */}
                                     {room_list.map((number) =>
                                     <a href="#"
                                     key={number.id}>
@@ -332,7 +382,7 @@ function Chat({ope_id}) {
                                         //  key={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
-                                        部屋{number.id}
+                                        {number.id}
                                         </li>
                                     </a>
         
@@ -347,10 +397,29 @@ function Chat({ope_id}) {
                     <div className="col">
                         <div className="card">
                             <div className="card-body">
-                                {/* オペレーター時のみ表示 */}
-                            {role==="operator" &&   ( <Button bg="#FFE3D3" size="sm"
+            
+                                {/* オペレーター＆未対応時のみ表示 */}
+                            {role==="operator" && room_info.status_id === 1 &&
+                             ( <Button bg="#FFE3D3" size="sm"
                             leftIcon={<ArrowRightIcon />} 
-                            onClick={onClickJoinRoom}>対応する</Button>)}
+                            onClick={onClickJoinRoom}>対応する</Button>)
+                            }
+
+                            {/* オペレーター＆対応中のみ表示 */}
+                            {role==="operator" && room_info.status_id === 2 &&
+                             ( <Button bg="#FFE3D3" size="sm"
+                            leftIcon={<ArrowRightIcon />} 
+                            onClick={onClickDoneRoom}>対応完了にする</Button>)
+                            }
+
+                            {/* オペレーター＆対応完了のみ表示 */}
+                            {role==="operator" && room_info.status_id === 3 &&
+                             ( <Button bg="#FFE3D3" size="sm"
+                            leftIcon={<ArrowRightIcon />} 
+                            onClick={onClickUndone}>未対応に戻す</Button>)
+                            }
+
+
                                 <SChatdiv>
                                 <ul id="chat_list" className="chat_list list-group">
                                     {msg_list.map((msgs) =>
@@ -418,7 +487,10 @@ function Chat({ope_id}) {
                                 </SChatdiv>
                             </div>
                             
-                    {/* チャット入力欄 */}
+                    {/* チャット入力欄 （status_id=3の時は表示されない）*/}
+                            {room_info.status_id === 3 ?
+                            <Center>この相談は終了しました。</Center>
+                            :
                             <div className="card-footer">
                                 <input type="text" id="chat_tbox" className="form-control" 
                                 placeholder="内容を入力して下さい" 
@@ -429,6 +501,8 @@ function Chat({ope_id}) {
                                 value="送信" onClick={onClickSendChats}
                                    />
                             </div>
+                            
+                            }
                         </div>
                     </div>
                     )}
@@ -447,7 +521,8 @@ const SChatdiv = styled.div `
     margin: 15px auto;
     text-align: right;
     font-size: 14px;
-    background: #7da4cd;
+    background: #FFE3D3;
+    box-shadow:2px 2px 4px gray;
 `
 const SLeftdiv = styled.div `
     width: 100%;
