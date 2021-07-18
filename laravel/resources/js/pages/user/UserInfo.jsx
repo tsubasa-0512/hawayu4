@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
@@ -9,7 +9,41 @@ import {
     Container,Select,Image,Center, Flex
   } from "@chakra-ui/react"
 
-const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,created_at}) =>{
+import UserProvider, { UserContext } from '../user/UserProvider';
+// ({user_id,user_name,nickname,email,gender,birthday,company_id,created_at})
+
+const UserInfo= ()=>{
+    // const {user, setUser} = useContext(UserContext)
+
+    const [user, setUser] = useState([]);
+
+    const api_token=
+    document
+    .querySelector('meta[name="api-token"]')
+    .getAttribute("content");
+
+    const csrf_token = 
+    document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content")
+
+    useEffect(() => {
+        getUser()
+    },[])
+
+    const getUser = async () => {
+        console.log("URL",`/api/user?api_token=${api_token}`)
+         await axios
+        .get(`/api/user?api_token=${api_token}`)
+        .then( (res) => {
+                console.log("user",res.data)
+                    setUser(res.data);
+                }).catch(error => {
+                     console.log('Error',error.response);
+                         });
+                }
+
+    const birthday = user.birthday
     const ageCalculation = ( birthday , nowDate ) => {
         const birthNumber = birthday.getFullYear() * 10000 
                                    + (birthday.getMonth() + 1 ) * 100 
@@ -25,7 +59,9 @@ const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,cr
 
     return (
         <>
-        <Flex shadow="sm" justifyContent="center" w="70vw" h="20vh" bg="orange.100"
+      
+        <ChakraProvider>
+        <Flex shadow="sm" justifyContent="center" w="80vw" h="50vh" bg="orange.100"
         mx="auto" mt={"2rem"} mb={"1rem"} rounded="lg" p={4} shadow="lg">
             <Box>
                 <Image
@@ -34,16 +70,20 @@ const UserInfo= ({user_id,user_name,nickname,email,gender,birthday,company_id,cr
                     w={"3rem"} h={"3rem"}
                     borderRadius="full"
                  />
-                 <Text>{user_name}</Text>
+                 <Text>お名前：{user.name}</Text>
+                 <Text>ニックネーム：{user.nickname}</Text>
             </Box>
             <Box color="gray.600" fontSize="sm" ml={"2rem"}>
-                <Text>{gender} {age}歳</Text>
+                <Text>性別：{user.gender}</Text>
+                <Text>誕生日：{user.birthday}（{age}歳）</Text>
                 {/* 法人コードと一致するcompany名を取得する予定 */}
-                <Text>法人コード:{company_id}</Text>
-                <Text>登録日：{created_at}</Text>
+                <Text>法人コード:{user.company_id}</Text>
+                <Text>登録日：{user.created_at}</Text>
              </Box>
 
         </Flex>
+        </ChakraProvider>
+     
       </>
     )
 }

@@ -60,6 +60,11 @@ function UserMyPage(props) {
                      console.log('Error',error.response);
                          });
                 }
+
+        //ユーザー詳細へ
+        const onClickToUserDetail = () =>{
+            history.push("/user/detail")
+        }
     return (
         <ChakraProvider>
 
@@ -93,6 +98,7 @@ function UserMyPage(props) {
             bg="orange.100" shadow="lg" color="gray"
             w="30vw" h="20vw"
             mr={"1rem"}
+            onClick={onClickToUserDetail}
                 >登録内容
             </Button>
             <MoveChatPage />

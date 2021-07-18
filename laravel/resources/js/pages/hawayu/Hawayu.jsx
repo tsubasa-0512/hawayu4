@@ -8,9 +8,11 @@ import {
     FormControl,FormLabel,Text,
     Container,Select,Image,Center,
     Modal,ModalOverlay,ModalContent,
-    ModalHeader,ModalFooter,ModalBody,ModalCloseButton,useDisclosure
+    ModalHeader,ModalFooter,ModalBody,ModalCloseButton,useDisclosure,
+    List, ListItem, ListIcon, OrderedList, UnorderedList,
   } from "@chakra-ui/react"
 import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'
+import { MdCheckCircle } from "react-icons/md";
 
 import question1 from './question1.png';
 import question2 from './question2.png';
@@ -158,16 +160,45 @@ const Hawayu = () =>{
           <ModalCloseButton />
           <ModalBody>
           {scoreData.score && 
-               <ul >
-                <li>{scoreData.updated_at}</li>
-                <li>{scoreData.score}点</li>
-                <li>{
-                    scoreData.score >= 5 ?
-                    "良い調子ですね！"
-                    :
-                     <MoveChatPage />
-                    }</li>
-               </ul>
+               <List spacing={3}>
+                <ListItem>
+                <ListIcon as={MdCheckCircle} color="green.500" />
+                {scoreData.updated_at}
+                </ListItem>
+           
+               
+                <ListItem>
+                <ListIcon as={MdCheckCircle} 
+                
+               color= {scoreData.score >=5 ? "green.500"
+                :"red.500"} />
+                今回は{scoreData.score}点でした
+                </ListItem>
+                
+
+                {scoreData.score < 5 &&
+                <ListItem>
+                <ListIcon as={MdCheckCircle}  />{
+                    
+                    "気になることがありますか？チャットで相談してみましょう"
+                    }
+                </ListItem>
+                }
+
+                    {scoreData.score < 5 &&
+                        <MoveChatPage />}
+                        
+
+                <ListItem>
+                <ListIcon as={MdCheckCircle} color="green.500" />{
+                    scoreData.score >= 5 &&
+                    "良い調子ですね！気になることがあればコンテンツを読んでみましょう"
+                }
+                 
+                    
+                    
+                </ListItem>
+               </List>
             }
           </ModalBody>
 
