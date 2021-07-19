@@ -21,4 +21,9 @@ class Room extends Model
     {
         return $this->hasMany('App\Models\Message');
     }
+
+    public function latestMessage() {
+        return $this->hasOne('App\Models\Message')
+        ->orderBy('created_at', 'desc');
+    }
 }
