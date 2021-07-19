@@ -12,6 +12,7 @@ import { userRoutes } from './userRoutes';
 import { opeRoutes } from './opeRoutes';
 import ChatPage from '../pages/chats/ChatPage';
 import UserProvider from '../pages/user/UserProvider';
+import WorkSleep from '../pages/contents/WorkSleep';
 
 
 
@@ -32,6 +33,12 @@ import UserProvider from '../pages/user/UserProvider';
                    <DefaultLayout>
                     <ChatPage />
                    </DefaultLayout>
+                 </Route>
+
+                 <Route path='/contents/sleep/work'>
+                 <DefaultLayout>
+                   <WorkSleep />
+                 </DefaultLayout>
                  </Route>
 
                 {/* <UserProvider> */}
