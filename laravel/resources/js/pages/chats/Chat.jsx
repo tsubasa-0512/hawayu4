@@ -308,8 +308,7 @@ function Chat({ope_id}) {
             await axios.post(`http://localhost/api/close-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
         .then((response)=>{
             console.log("closeroom",response.data)
-            const newDoneRoom = [...doneRoom,response.data]
-            setDoneRoom(newDoneRoom)
+         
           
         }).then( 
              alert("「対応完了」にしました！ご対応をありがとうございました")
@@ -325,12 +324,25 @@ function Chat({ope_id}) {
             await axios.post(`http://localhost/api/rollback-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
             .then((response)=>{
                 console.log("undoneroom",response.data)
-                setDoneRoom(response.data)
+                // setDoneRoom(response.data)
             }).then( 
                  alert("「対応中」に戻しました！ご対応をお願いいたします")
             ).catch(error => {
                 console.log('Error',error.response);
                     });
+            }
+
+            //保健師のページに対応完了ルームを読み込む
+            const onClickDone =async () =>{
+                await axios.get(`http://localhost/api/done?api_token=${api_token}`,{csrf_token})
+                .then((response)=>{
+                    console.log("doneData",response.data)
+                    // const newDoneRoom = [...doneRoom,response.data]
+                    setDoneRoom(response.data)
+                })
+                .catch(error => {
+                    console.log('Error',error.response);
+                        });
             }
 
         return (
@@ -362,6 +374,28 @@ function Chat({ope_id}) {
                                     className="list-group-item list-group-item-action" 
                                     style={{ backgroundColor: '#abedd8' }}>
                                         {number.id}
+                                        </li>
+                                    </a>
+                                    )}
+                                        
+                                </div>
+                                }
+                                 {role==="operator"&&
+                                <div>
+                               
+                                <Button leftIcon={<AddIcon />} 
+                                    bg="#FFE3D3" size="sm" ml="0" onClick={onClickDone}>
+                                       対応済
+                                </Button>
+                                {doneRoom.map((rm) =>
+                                    <a href="#"
+                                    key={rm.id}>
+                                        <li id={rm.id}
+                                         key={rm.id} 
+                                    onClick={onClickLoadChats} 
+                                    className="list-group-item list-group-item-action" 
+                                    style={{ backgroundColor: '#abedd8' }}>
+                                        {rm.id}
                                         </li>
                                     </a>
                                     )}
