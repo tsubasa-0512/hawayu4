@@ -25,7 +25,7 @@ const SHeader = styled.header`
 `
 const SLink = styled(Link)`
     margin:0 8px;
-    color:white;
+    color:gray;
 `
 
 export default Header;

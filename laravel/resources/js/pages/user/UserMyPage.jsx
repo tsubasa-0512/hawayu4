@@ -12,6 +12,7 @@ import {
 import MoveChatPage from '../chats/MoveChatPage';
 import { DefaultButton } from '../../parts/DefaultButton';
 import Contents from '../contents/Contents';
+import Result from '../hawayu/Result';
 
 function UserMyPage(props) {
 
@@ -65,6 +66,7 @@ function UserMyPage(props) {
         const onClickToUserDetail = () =>{
             history.push("/user/detail")
         }
+
     return (
         <ChakraProvider>
 
@@ -109,6 +111,8 @@ function UserMyPage(props) {
         <Contents />
         </Box>
 
+        <Result 
+        user_id={user.id}/>
         {/* <AddChatRoom 
         user_id = {user.id}
         /> */}
