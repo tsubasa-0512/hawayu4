@@ -31,11 +31,13 @@ class RoomsController extends Controller
         // ユーザーの場合は自身の立てたroomを表示し、保健師の場合は未対応のroomを全て表示
         if($request->role === 'user') {
             $user_id = Auth::user()->id;
-            return Room::where('user_id', $user_id)
+            return Room::with('latestMessage')
+            ->where('user_id', $user_id)
             ->orderBy('updated_at', 'desc')
             ->get();    
         }else {
-            return Room::where('status_id', 1)
+            return Room::with('latestMessage')
+            ->where('status_id', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
             }
@@ -50,14 +52,14 @@ class RoomsController extends Controller
         ->where('room_id', $room_id)
         ->leftJoin('users', 'users.id', '=', 'messages.user_id')
         ->select('messages.*','users.nickname')
-        ->get();
+        ->get();    
         
         return [$room, $msg_list];
     }
 
     //未対応ルーム情報取得
     public function backlog() {
-        return Room::where('status_id', 1)->get();
+        return Room::with('latestMessage')->where('status_id', 1)->get();
     }
     
     // 保健師がルームに参加
@@ -75,7 +77,8 @@ class RoomsController extends Controller
     //対応中ルーム情報取得
     public function wip(Request $request, Room $room) {
         $operator = $request->user();
-        return $room->where('status_id', 2)
+        return $room->with('latestMessage')
+        ->where('status_id', 2)
         ->where('operator_id', $operator->id)
         ->get();
     }
@@ -107,7 +110,8 @@ class RoomsController extends Controller
     //対応済ルーム情報取得
     public function done(Request $request, Room $room) {
         $operator = $request->user();
-        return $room->where('status_id', 3)
+        return $room->with('latestMessage')
+        ->where('status_id', 3)
         ->where('operator_id', $operator->id)
         ->get();
     }
