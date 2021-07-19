@@ -1,4 +1,5 @@
 import React, { useEffect, useState,useContext } from 'react';
+import {useHistory} from "react-router-dom";
 import axios from 'axios';
 
 import styled from 'styled-components';
@@ -13,7 +14,7 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,useDisclosure,AlertDialogCloseButton
   } from "@chakra-ui/react"
-import { AddIcon ,ArrowRightIcon} from '@chakra-ui/icons'
+import { AddIcon ,ArrowRightIcon,ArrowBackIcon} from '@chakra-ui/icons'
 
 import { UserContext } from '../user/UserProvider';
 import { PrimaryButton } from '../../parts/PrimaryButton';
@@ -76,6 +77,7 @@ function Chat({ope_id}) {
             });
     },[])
 
+    const history = useHistory();
     const role = document.querySelector('meta[name="role"]').getAttribute("content");
     const api_token = document
         .querySelector('meta[name="api-token"]')
@@ -348,6 +350,10 @@ function Chat({ope_id}) {
         return (
             <>
             <ChakraProvider>
+            <ButtonGroup mt="0.5rem" ml="0.5rem" size="sm" isAttached variant="outline" onClick ={()=>history.goBack()}>
+                    <IconButton aria-label="back" icon={<ArrowBackIcon />} />
+                    <Button mr="-px">戻る</Button>  
+            </ButtonGroup>
             <div className="container">               
                 <div className="row no-gutters">
                     <div className="col-3">
