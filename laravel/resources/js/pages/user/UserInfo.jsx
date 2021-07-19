@@ -1,21 +1,24 @@
 import React, { useEffect, useState ,useContext} from 'react';
-import ReactDOM from 'react-dom';
+import {useHistory} from "react-router-dom";
 import axios from 'axios';
 
 import styled from 'styled-components';
 import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
-    Heading,Text,Spacer,
-    Container,Select,Image,Center, Flex
+    Heading,
+    Container,Select,Image,Center,Modal,ModalOverlay,ModalContent,
+    ModalHeader,ModalFooter,ModalBody,ModalCloseButton,useDisclosure,Text,
+    List,ListItem,ListIcon,Flex
   } from "@chakra-ui/react"
+import { ArrowRightIcon,ArrowBackIcon } from '@chakra-ui/icons'
 
 import UserProvider, { UserContext } from '../user/UserProvider';
 // ({user_id,user_name,nickname,email,gender,birthday,company_id,created_at})
 
 const UserInfo= ()=>{
-    // const {user, setUser} = useContext(UserContext)
 
     const [user, setUser] = useState([]);
+    const history = useHistory();
 
     const api_token=
     document
@@ -61,6 +64,11 @@ const UserInfo= ()=>{
         <>
       
         <ChakraProvider>
+        <ButtonGroup mt="0.5rem" ml="0.5rem" size="sm" isAttached variant="outline" onClick ={()=>history.goBack()}>
+                    <IconButton aria-label="back" icon={<ArrowBackIcon />} />
+                    <Button mr="-px">戻る</Button>  
+        </ButtonGroup>
+        
         <Flex shadow="sm" justifyContent="center" w="80vw" h="50vh" bg="orange.100"
         mx="auto" mt={"2rem"} mb={"1rem"} rounded="lg" p={4} shadow="lg">
             <Box>
