@@ -368,7 +368,7 @@ function Chat({ope_id}) {
                                 <div>
                                
                                 <Button leftIcon={<AddIcon />} 
-                                    bg="#FFE3D3" size="sm" ml="0" onClick={onClickWip}>
+                                    bg="#abedd8" size="sm" ml="0" onClick={onClickWip}>
                                        対応中
                                 </Button>
                                 {wipRoom.map((number) =>
@@ -380,6 +380,7 @@ function Chat({ope_id}) {
                                     className="list-group-item list-group-item-action" 
                                     style={{ backgroundColor: '#abedd8' }}>
                                         {number.id}
+                                        {/* {number.latest_message.message}                                         */}
                                         </li>
                                     </a>
                                     )}
@@ -400,8 +401,9 @@ function Chat({ope_id}) {
                                          key={rm.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" 
-                                    style={{ backgroundColor: '#abedd8' }}>
+                                    style={{ backgroundColor: '#FFE3D3' }}>
                                         {rm.id}
+                                        {/* {rm.latest_message.message} */}
                                         </li>
                                     </a>
                                     )}
@@ -423,6 +425,7 @@ function Chat({ope_id}) {
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
                                         {number.id}
+                                        {/* {number.latest_message.message} */}
                                         </li>
                                     </a>
         
