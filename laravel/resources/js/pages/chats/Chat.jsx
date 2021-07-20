@@ -374,14 +374,25 @@ function Chat({ope_id}) {
                                 {wipRoom.map((number) =>
                                     <a href="#"
                                     key={number.id}>
+                                    {number.latest_message == null  ?
                                         <li id={number.id}
                                         //  key={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" 
                                     style={{ backgroundColor: '#abedd8' }}>
-                                        {number.id}
+                                        まだメッセージはありません
                                         {/* {number.latest_message.message}                                         */}
                                         </li>
+                                    :
+                                         <li id={number.id}
+                                            //  key={number.id} 
+                                            onClick={onClickLoadChats} 
+                                        className="list-group-item list-group-item-action" 
+                                        style={{ backgroundColor: '#abedd8' }}>
+                                            {number.latest_message.created_at}
+                                            「{number.latest_message.message}」                                        
+                                        </li>
+                                    }
                                     </a>
                                     )}
                                         
@@ -397,14 +408,25 @@ function Chat({ope_id}) {
                                 {doneRoom.map((rm) =>
                                     <a href="#"
                                     key={rm.id}>
+                                    {rm.latest_message == null  ?
                                         <li id={rm.id}
                                          key={rm.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" 
                                     style={{ backgroundColor: '#FFE3D3' }}>
-                                        {rm.id}
-                                        {/* {rm.latest_message.message} */}
+                                        まだメッセージはありません
+
                                         </li>
+                                    :
+                                        <li id={rm.id}
+                                         key={rm.id} 
+                                    onClick={onClickLoadChats} 
+                                    className="list-group-item list-group-item-action" 
+                                    style={{ backgroundColor: '#FFE3D3' }}>
+                                        {rm.latest_message.created_at}
+                                        「{rm.latest_message.message}」
+                                        </li>
+                                    }
                                     </a>
                                     )}
                                         
@@ -420,13 +442,25 @@ function Chat({ope_id}) {
                                     {room_list.map((number) =>
                                     <a href="#"
                                     key={number.id}>
+                                    {number.latest_message == null  ?
                                         <li id={number.id}
                                         //  key={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
-                                        {number.id}
-                                        {/* {number.latest_message.message} */}
-                                        </li>
+                                          まだメッセージはありません
+                                         </li>
+                                               
+                                        :
+                                        <li id={number.id}
+                                        //  key={number.id} 
+                                    onClick={onClickLoadChats} 
+                                    className="list-group-item list-group-item-action" >
+                                          {number.latest_message.created_at}
+                                          「{number.latest_message.message}」
+                                         </li>
+                              
+                                    } 
+                                       
                                     </a>
         
                                     )}
