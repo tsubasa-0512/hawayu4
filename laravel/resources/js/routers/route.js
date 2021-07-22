@@ -13,8 +13,11 @@ import { opeRoutes } from './opeRoutes';
 import ChatPage from '../pages/chats/ChatPage';
 import UserProvider from '../pages/user/UserProvider';
 import WorkSleep from '../pages/contents/WorkSleep';
-
-
+import ContentsList from '../pages/contents/ContentsList';
+import ContentsListEn from '../pages/contents/ContentsListEn';
+import WorkSleepEn from '../pages/contents/WorkSleepEn';
+import WorkTekiou from '../pages/contents/WorkTekiou';
+import WorkTekiouEn from '../pages/contents/WorkTekiouEn';
 
   function App() {
     return (
@@ -35,9 +38,41 @@ import WorkSleep from '../pages/contents/WorkSleep';
                    </DefaultLayout>
                  </Route>
 
+
+                 <Route path='/contents/list'>
+                 <DefaultLayout>
+                   <ContentsList />
+                 </DefaultLayout>
+                 </Route>
+
+                 <Route path='/contents/en/list'>
+                 <DefaultLayout>
+                   <ContentsListEn />
+                 </DefaultLayout>
+                 </Route>
+
+                 <Route path='/contents/en/sleep/work'>
+                 <DefaultLayout>
+                   <WorkSleepEn />
+                 </DefaultLayout>
+                 </Route>
+                
+
                  <Route path='/contents/sleep/work'>
                  <DefaultLayout>
                    <WorkSleep />
+                 </DefaultLayout>
+                 </Route>
+
+                 <Route path='/contents/en/tekiou/work'>
+                 <DefaultLayout>
+                   <WorkTekiouEn />
+                 </DefaultLayout>
+                 </Route>
+
+                 <Route path='/contents/tekiou/work'>
+                 <DefaultLayout>
+                   <WorkTekiou />
                  </DefaultLayout>
                  </Route>
 
