@@ -13,6 +13,7 @@ import MoveChatPage from '../chats/MoveChatPage';
 import { DefaultButton } from '../../parts/DefaultButton';
 import Contents from '../contents/Contents';
 import Result from '../hawayu/Result';
+import ContentsList from '../contents/ContentsList';
 
 function UserMyPage(props) {
 
