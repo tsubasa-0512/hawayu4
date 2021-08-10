@@ -145,10 +145,11 @@ function Chat({ope_id}) {
     //表示されたroomをクリックすると該当roomの全メッセージを表示（onClick）
     const onClickLoadChats = async (el_id)=>{
         const clicked_room_id = el_id.target.id;
+        const role = document.querySelector('meta[name="role"]').getAttribute("content");
         console.log(el_id.target.id)
         let tok = document.querySelector('meta[name="csrf-token"]').content;
         // alert(el_id.target.id);
-        await fetch('/load-msg?room_id='+clicked_room_id,{
+        await fetch('/load-msg?room_id='+clicked_room_id+'&role='+role,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',

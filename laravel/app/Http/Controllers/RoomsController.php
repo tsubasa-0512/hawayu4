@@ -8,6 +8,8 @@ use App\Models\Operator;
 use App\Models\Status;
 use App\Models\Room;
 use App\Models\Message;
+use App\Models\Message_User;
+use App\Models\Message_Operator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +25,7 @@ class RoomsController extends Controller
         $room->status_id = 1;
         $room->save();
 
-        return $room;
+        return json_encode($room);
     }
 
     // room情報取得
@@ -36,7 +38,7 @@ class RoomsController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();    
         }else {
-            return Room::with('latestMessage')
+            return Room::with('latestMessage:room_id,message')
             ->where('status_id', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
@@ -47,13 +49,38 @@ class RoomsController extends Controller
         $room_id = $request->room_id;
 
         $room = Room::where('id', $room_id)->first();
-        
-        $msg_list = DB::table('messages')
-        ->where('room_id', $room_id)
-        ->leftJoin('users', 'users.id', '=', 'messages.user_id')
-        ->select('messages.*','users.nickname')
-        ->get();    
-        
+               
+        if($request->role === 'operator') {
+            $msg_list = DB::table('messages')
+            ->where('room_id', $room_id)
+            ->leftJoin('message_operator', 'message_operator.message_id', '=', 'messages.id')
+            ->leftJoin('users', 'users.id', '=', 'messages.user_id')
+            ->select('messages.*','users.nickname', 'message_operator.is_read')
+            ->get(); 
+            
+            foreach($msg_list as $msg) {
+                $read_records = Message_User::where('message_id', $msg->id)->where('is_read', false)->get();
+                foreach($read_records as $record) {
+                    $record->is_read = true;
+                    $record->save();
+                }
+            }
+        }else {
+            $msg_list = DB::table('messages')
+            ->where('room_id', $room_id)
+            ->leftJoin('message_user', 'message_user.message_id', '=', 'messages.id')
+            ->leftJoin('users', 'users.id', '=', 'messages.user_id')
+            ->select('messages.*','users.nickname', 'message_user.is_read')
+            ->get(); 
+            
+            foreach($msg_list as $msg) {
+                $read_records = Message_Operator::where('message_id', $msg->id)->where('is_read', false)->get();
+                foreach($read_records as $record) {
+                    $record->is_read = true;
+                    $record->save();
+                }
+            }
+       }
         return [$room, $msg_list];
     }
 
