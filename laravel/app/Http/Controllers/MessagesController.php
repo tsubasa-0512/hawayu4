@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Room;
+use App\Models\Message_User;
+use App\Models\Message_Operator;
 use App\Events\SendMessage;
 
 class MessagesController extends Controller
@@ -17,6 +19,8 @@ class MessagesController extends Controller
             $message->user_id = $request->id;
             $message->room_id = $request->room_id;
             $message->save();
+
+            $message->unread()->attach($request->id);
             
             $messages = [
                 'message' =>  $request->message,
@@ -28,6 +32,8 @@ class MessagesController extends Controller
             $message->operator_id = $request->id;
             $message->room_id = $request->room_id;
             $message->save();
+
+            $message->unreadOpe()->attach($request->id);
             
             $messages = [
                 'message' =>  $request->message,
