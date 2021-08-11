@@ -24,6 +24,7 @@ class Room extends Model
 
     public function latestMessage() {
         return $this->hasOne('App\Models\Message')
-        ->orderBy('created_at', 'desc');
+        ->orderBy('created_at', 'desc')
+        ->with('latestMsgStatus','latestMsgStatusOpe');
     }
 }
