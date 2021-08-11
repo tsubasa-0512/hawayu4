@@ -15,4 +15,14 @@ class Message extends Model
     {
         return $this->belongsToMany('App\Models\Operator')->withTimestamps();
     }
+
+    public function latestMsgStatus()
+    {
+        return $this->hasOne('App\Models\Message_User');
+    }
+
+    public function latestMsgStatusOpe()
+    {
+        return $this->hasOne('App\Models\Message_Operator');
+    }
 }

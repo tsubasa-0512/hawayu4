@@ -38,7 +38,7 @@ class RoomsController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();    
         }else {
-            return Room::with('latestMessage:room_id,message')
+            return Room::with('latestMessage')
             ->where('status_id', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
