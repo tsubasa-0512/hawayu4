@@ -55,14 +55,36 @@ class RoomsController extends Controller
             ->where('room_id', $room_id)
             ->leftJoin('message_operator', 'message_operator.message_id', '=', 'messages.id')
             ->leftJoin('users', 'users.id', '=', 'messages.user_id')
-            ->select('messages.*','users.nickname', 'message_operator.is_read')
+            ->select('messages.*','users.nickname', 'message_operator.unread')
+            ->get(); 
+        }else {
+            $msg_list = DB::table('messages')
+            ->where('room_id', $room_id)
+            ->leftJoin('message_user', 'message_user.message_id', '=', 'messages.id')
+            ->leftJoin('users', 'users.id', '=', 'messages.user_id')
+            ->select('messages.*','users.nickname', 'message_user.unread')
+            ->get(); 
+       }
+        return [$room, $msg_list];
+    }
+
+    public function loadMessageOnSeen(Request $request) {
+        $room_id = $request->room_id;
+
+        $room = Room::where('id', $room_id)->first();
+               
+        if($request->role === 'operator') {
+            $msg_list = DB::table('messages')
+            ->where('room_id', $room_id)
+            ->leftJoin('message_operator', 'message_operator.message_id', '=', 'messages.id')
+            ->leftJoin('users', 'users.id', '=', 'messages.user_id')
+            ->select('messages.*','users.nickname', 'message_operator.unread')
             ->get(); 
             
             foreach($msg_list as $msg) {
-                $read_records = Message_User::where('message_id', $msg->id)->where('is_read', false)->get();
-                foreach($read_records as $record) {
-                    $record->is_read = true;
-                    $record->save();
+                if($msg->sender === 'user'){
+                    $message = Message::find($msg->id);
+                    $message->unread()->wherePivot('message_id', '=', $message->id)->detach();
                 }
             }
         }else {
@@ -70,14 +92,13 @@ class RoomsController extends Controller
             ->where('room_id', $room_id)
             ->leftJoin('message_user', 'message_user.message_id', '=', 'messages.id')
             ->leftJoin('users', 'users.id', '=', 'messages.user_id')
-            ->select('messages.*','users.nickname', 'message_user.is_read')
+            ->select('messages.*','users.nickname', 'message_user.unread')
             ->get(); 
             
             foreach($msg_list as $msg) {
-                $read_records = Message_Operator::where('message_id', $msg->id)->where('is_read', false)->get();
-                foreach($read_records as $record) {
-                    $record->is_read = true;
-                    $record->save();
+                if($msg->sender === 'operator'){
+                    $message = Message::find($msg->id);
+                    $message->unreadOpe()->wherePivot('message_id', '=', $message->id)->detach();
                 }
             }
        }

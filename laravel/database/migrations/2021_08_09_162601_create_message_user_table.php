@@ -21,7 +21,7 @@ class CreateMessageUserTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('message_id');
             $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
-            $table->boolean('is_read')->default(false);
+            $table->boolean('unread')->default(true);
             $table->timestamps();
         });
 
