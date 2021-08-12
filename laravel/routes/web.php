@@ -47,6 +47,9 @@ Route::post('/rooms','RoomsController@loadRoom');
 // roomに紐づくメッセージ情報取得
 Route::post('/load-msg','RoomsController@loadMessage');
 
+// roomに紐づくメッセージ情報取得(既読処理込み)
+Route::post('/load-msg-onseen','RoomsController@loadMessageOnSeen');
+
 // メッセージ送信
 Route::post('/messages','MessagesController@sendMessages'); 
 

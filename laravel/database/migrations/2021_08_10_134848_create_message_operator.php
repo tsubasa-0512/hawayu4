@@ -21,7 +21,7 @@ class CreateMessageOperator extends Migration
             $table->foreign('operator_id')->references('id')->on('operators')->onDelete('cascade');
             $table->unsignedBigInteger('message_id');
             $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
-            $table->boolean('is_read')->default(false);
+            $table->boolean('unread')->default(true);
             $table->timestamps();
         });
 

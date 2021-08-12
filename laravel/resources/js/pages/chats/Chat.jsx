@@ -35,17 +35,18 @@ function Chat({ope_id}) {
     const[doneRoom,setDoneRoom] = useState([]);
 
     useEffect(() => {
+        
         loadRooms();
-
         window.Echo.channel('send-message')
-            .listen('SendMessage',response => {
-                console.log(response.messages['room_id']);
-
+        .listen('SendMessage',response => {
+            console.log(response.messages['room_id']);
+            
 
             const clicked_room_id = response.messages['room_id'];
+            const role = document.querySelector('meta[name="role"]').getAttribute("content");
             let tok = document.querySelector('meta[name="csrf-token"]').content;
             // alert(el_id.target.id);
-            fetch('/load-msg?room_id='+clicked_room_id,{
+            fetch(`/load-msg?room_id=${clicked_room_id}&role=${role}`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
@@ -67,7 +68,7 @@ function Chat({ope_id}) {
                 setMsg_list(arr[1]);
                 // console.log("msg_list",msg_list)
                 setRoom_id(clicked_room_id);
-                console.log('url','/load-msg?room_id='+clicked_room_id)
+                console.log('url',`/load-msg?room_id=${clicked_room_id}&role=${role}`)
             
                 // console.log("room_id",newRoomId)
             })
@@ -149,7 +150,7 @@ function Chat({ope_id}) {
         console.log(el_id.target.id)
         let tok = document.querySelector('meta[name="csrf-token"]').content;
         // alert(el_id.target.id);
-        await fetch('/load-msg?room_id='+clicked_room_id+'&role='+role,{
+        await fetch(`/load-msg-onseen?room_id=${clicked_room_id}&role=${role}`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -173,7 +174,7 @@ function Chat({ope_id}) {
             // setRoom_info(newRoomInfoList)
   
             setRoom_id(clicked_room_id);
-            console.log('url','/load-msg?room_id='+clicked_room_id)
+            console.log('url',`/load-msg-onseen?room_id=${clicked_room_id}&role=${role}`)
           
             // console.log("room_id",newRoomId)
         })
