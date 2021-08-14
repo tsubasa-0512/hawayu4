@@ -7,14 +7,9 @@ import {
     IconButton,Button,ButtonGroup,Box,ChakraProvider,Badge,
     Heading,
     Container,Select,Image,Center,Grid, GridItem ,Text,
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogContent,
-    AlertDialogOverlay,useDisclosure,AlertDialogCloseButton
+   useDisclosure,AlertDialogCloseButton
   } from "@chakra-ui/react"
-import { AddIcon ,ArrowRightIcon,ArrowBackIcon} from '@chakra-ui/icons'
+import { AddIcon ,ArrowRightIcon,ArrowBackIcon,ChatIcon} from '@chakra-ui/icons'
 
 import { UserContext } from '../user/UserProvider';
 import { PrimaryButton } from '../../parts/PrimaryButton';
@@ -366,6 +361,7 @@ function Chat({ope_id}) {
                            
                             
                                 <ul id="user_list" className="user_list list-group">
+                                    {/* 対応中リスト */}
                                 {role==="operator"&&
                                 <div>
                                
@@ -386,14 +382,29 @@ function Chat({ope_id}) {
                                         {/* {number.latest_message.message}                                         */}
                                         </li>
                                     :
-                                         <li id={number.id}
+                                    //既読の場合
+                                    (number.latest_message.latest_msg_status == null ?
+                                         (<li id={number.id}
+                                            //  key={number.id} 
+                                            onClick={onClickLoadChats} 
+                                        className="list-group-item list-group-item-action" 
+                                        // style={{ backgroundColor: '#abedd8' }}
+                                        >
+                                            {number.latest_message.created_at}
+                                            「{number.latest_message.message}」  
+                                        </li>)
+                                        :
+                                    //未読の場合
+                                        (<li id={number.id}
                                             //  key={number.id} 
                                             onClick={onClickLoadChats} 
                                         className="list-group-item list-group-item-action" 
                                         style={{ backgroundColor: '#abedd8' }}>
                                             {number.latest_message.created_at}
-                                            「{number.latest_message.message}」                                        
-                                        </li>
+                                            {<ChatIcon />} 
+                                            「{number.latest_message.message}」  
+                                        </li>)
+                                    )  
                                     }
                                     </a>
                                     )}
@@ -440,29 +451,78 @@ function Chat({ope_id}) {
                                         新しく相談する
                                     </Button>
                                 }
-                                {/* {role==="operator" && <Text>未対応</Text>} */}
+                
                                     {room_list.map((number) =>
                                     <a href="#"
                                     key={number.id}>
                                     {number.latest_message == null  ?
-                                        <li id={number.id}
+                                        (<li id={number.id}
                                         //  key={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
                                           まだメッセージはありません
-                                         </li>
+                                         </li>)
                                                
                                         :
+                                        //ユーザー＆既読の場合
+                                (role==="user" ?
+                                    (number.latest_message.latest_msg_status_ope == null ?
                                         <li id={number.id}
                                         //  key={number.id} 
                                     onClick={onClickLoadChats} 
+                                    // style={{background:"#ffe4e1"}}
                                     className="list-group-item list-group-item-action" >
                                           {number.latest_message.created_at}
-                                          「{number.latest_message.message}」
+                                          「{number.latest_message.message}」                                    
                                          </li>
-                              
+
+                                         :
+                                   
+                                         //ユーザー＆未読の場合
+                                         <li id={number.id}
+                                         //  key={number.id} 
+                                     onClick={onClickLoadChats} 
+                                     style={{background:"#ffe4e1"}}
+                                   
+                                     className="list-group-item list-group-item-action" >
+                                           
+                                            {number.latest_message.created_at}
+                                            {<ChatIcon />} 
+                                           「{number.latest_message.message}」                             
+                                          </li>
+                                    )
+                                : 
+                                     //オペ＆既読の場合
+                                (role==="operator" && 
+                                (number.latest_message.latest_msg_status == null ?
+                                    <li id={number.id}
+                                    //  key={number.id} 
+                                onClick={onClickLoadChats} 
+                                // style={{background:"#ffe4e1"}}
+                                className="list-group-item list-group-item-action" >
+                                      {number.latest_message.created_at}
+                                      「{number.latest_message.message}」                                    
+                                     </li>
+
+                                     :
+                               
+                                     //オペ＆未読の場合
+                                     <li id={number.id}
+                                     //  key={number.id} 
+                                 onClick={onClickLoadChats} 
+                                 style={{background:"#ffe4e1"}}
+                                
+                                 className="list-group-item list-group-item-action" >
+                                       {number.latest_message.created_at}
+                                       {<ChatIcon />} 
+                                       「{number.latest_message.message}」                                    
+                                      </li>
+                                )
+                            )   
+                                )
                                     } 
                                        
+                                      
                                     </a>
         
                                     )}
@@ -527,11 +587,15 @@ function Chat({ope_id}) {
                                             
                                         
                                             <SRsays>
-                                           
+                                   
                                                     <p> {msgs.message}</p>
                                                      {/* : <p> ハワユチーム：{msgs.message}</p>} */}
                                           
                                             </SRsays>
+                                            {msgs.unread == null ?
+                                                    <p>既読</p>
+                                                :
+                                                    <p>まだ読まれていません</p>}
                                           </SRightdiv> 
                                          
                                           //左（相手の送信）
