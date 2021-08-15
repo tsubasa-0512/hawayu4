@@ -56,14 +56,14 @@ class RoomsController extends Controller
             ->leftJoin('message_operator', 'message_operator.message_id', '=', 'messages.id')
             ->leftJoin('users', 'users.id', '=', 'messages.user_id')
             ->select('messages.*','users.nickname', 'message_operator.unread')
-            ->get(); 
+            ->orderBy('created_at','asc')->get(); 
         }else {
             $msg_list = DB::table('messages')
             ->where('room_id', $room_id)
             ->leftJoin('message_user', 'message_user.message_id', '=', 'messages.id')
             ->leftJoin('users', 'users.id', '=', 'messages.user_id')
             ->select('messages.*','users.nickname', 'message_user.unread')
-            ->get(); 
+            ->orderBy('created_at','asc')->get(); 
        }
         return [$room, $msg_list];
     }
@@ -79,7 +79,7 @@ class RoomsController extends Controller
             ->leftJoin('message_operator', 'message_operator.message_id', '=', 'messages.id')
             ->leftJoin('users', 'users.id', '=', 'messages.user_id')
             ->select('messages.*','users.nickname', 'message_operator.unread')
-            ->get(); 
+            ->orderBy('created_at','asc')->get(); 
             
             foreach($msg_list as $msg) {
                 if($msg->sender === 'user'){
@@ -93,7 +93,7 @@ class RoomsController extends Controller
             ->leftJoin('message_user', 'message_user.message_id', '=', 'messages.id')
             ->leftJoin('users', 'users.id', '=', 'messages.user_id')
             ->select('messages.*','users.nickname', 'message_user.unread')
-            ->get(); 
+            ->orderBy('created_at','asc')->get(); 
             
             foreach($msg_list as $msg) {
                 if($msg->sender === 'operator'){
