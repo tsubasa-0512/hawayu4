@@ -353,7 +353,8 @@ function Chat({ope_id}) {
             </ButtonGroup>
             <div className="container">               
                 <div className="row no-gutters">
-                    <div className="col-3">
+                    {/* <div className="col-3"> */}
+                    <div className="col">
                         <div className="card">
                              <div className="card-header">一覧</div>
                         
@@ -531,6 +532,7 @@ function Chat({ope_id}) {
                             </div>                            
                         </div>
                     </div>
+                    </div>
                     {/* チャット表示欄 */}
                     {room_id  && (
                     <div className="col">
@@ -649,7 +651,7 @@ function Chat({ope_id}) {
                         </div>
                     </div>
                     )}
-                </div>
+               
             </div>
             </ChakraProvider>
 
